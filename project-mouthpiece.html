@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<link
+  rel="icon"
+  type="image/svg+xml"
+  href="assets/logotab.svg"
+>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Mouthpiece</title>
+
+  <style>
+    :root {
+      --background: #000;
+      --white: #fff;
+
+      /* ========================================
+         GLOBAL LAYOUT
+         Dựa trên design 1440px
+         ======================================== */
+
+      --page-x:
+        clamp(24px, 3.05vw, 44px);
+
+      --content-left:
+        clamp(28px, 15.9vw, 230px);
+
+      --content-right:
+        clamp(28px, 15.9vw, 230px);
+
+      /* HEADER */
+
+      --header-y:
+        clamp(18px, 2.05vw, 30px);
+
+      /* TYPOGRAPHY */
+
+      --text-small: 16px;
+      --text-large: 40px;
+
+      /* SHADOW */
+
+      --text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.8),
+        0 0 10px rgba(0, 0, 0, 0.35);
+    }
+
+/* Hide scrollbar - vẫn scroll được */
+
+html {
+  scrollbar-width: none; /* Firefox */
+}
+
+body {
+  -ms-overflow-style: none; /* IE / old Edge */
+}
+
+/* Chrome, Safari, Edge */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+    /* ========================================
+       RESET
+       ======================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    html {
+      width: 100%;
+
+      background: #000;
+
+      scroll-behavior: smooth;
+    }
+
+
+    body {
+      width: 100%;
+
+      background: #000;
+
+      color: #fff;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      -webkit-font-smoothing:
+        antialiased;
+
+      text-rendering:
+        optimizeLegibility;
+    }
+
+
+    a {
+      color: inherit;
+
+      text-decoration: none;
+    }
+
+
+    /* ========================================
+       HEADER
+       ======================================== */
+
+    .site-header {
+      position: fixed;
+
+      top: 0;
+      left: 0;
+      right: 0;
+
+      z-index: 1000;
+
+      padding:
+        var(--header-y)
+        var(--page-x)
+        0;
+
+      pointer-events: none;
+    }
+
+
+    .site-header__inner {
+      display: grid;
+
+      width: 100%;
+
+      grid-template-columns:
+        repeat(5, 1fr);
+
+      align-items: start;
+
+      pointer-events: auto;
+    }
+
+
+    /* ========================================
+       LOGO
+       ======================================== */
+
+    .brand {
+      justify-self: start;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      height: 24px;
+    }
+
+
+    .brand img {
+      display: block;
+
+      width: auto;
+
+      height:
+        clamp(
+          18px,
+          1.7vw,
+          24px
+        );
+
+      filter:
+        drop-shadow(
+          0 1px 3px
+          rgba(0, 0, 0, 0.65)
+        );
+    }
+
+
+    /* ========================================
+       NAV
+       ======================================== */
+
+    .nav-link {
+      position: relative;
+
+      justify-self: center;
+
+      display: inline-flex;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 1px 2px;
+
+      overflow: hidden;
+
+      font-size: 16px;
+      font-weight: 400;
+
+      line-height: 1;
+
+      white-space: nowrap;
+    }
+
+
+    /* WHITE HOVER BOX */
+
+    .nav-link::before {
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      z-index: 1;
+
+      background: #fff;
+
+      transform:
+        scaleX(0);
+
+      transform-origin:
+        right center;
+
+      transition:
+        transform
+        350ms
+        cubic-bezier(
+          .76,
+          0,
+          .24,
+          1
+        );
+    }
+
+
+    .nav-link:not(.active):hover::before {
+      transform:
+        scaleX(1);
+
+      transform-origin:
+        left center;
+    }
+
+
+    /* NAV TEXT */
+
+    .nav-link span {
+      position: relative;
+
+      z-index: 2;
+
+      color: #fff;
+
+      font-size: 16px;
+
+      text-shadow:
+        var(--text-shadow);
+
+      transition:
+        color 140ms ease,
+        text-shadow 140ms ease;
+    }
+
+
+    .nav-link:not(.active):hover span {
+      color: #000;
+
+      text-shadow: none;
+    }
+
+
+    /* ========================================
+       ACTIVE = PROJECTS
+       ======================================== */
+
+    .nav-link.active::before {
+      transform:
+        scaleX(1);
+
+      transform-origin:
+        left center;
+
+      transition: none;
+    }
+
+
+    .nav-link.active span {
+      color: #000;
+
+      text-shadow: none;
+    }
+
+
+    /* ========================================
+       HERO
+       ======================================== */
+
+    .project-hero {
+      position: relative;
+
+      width: 100%;
+
+      /*
+        1440 x 1024 design:
+        phần video chính là full viewport.
+      */
+
+      height: 100vh;
+      height: 100svh;
+
+      min-height: 560px;
+
+      overflow: hidden;
+
+      background: #000;
+    }
+
+
+    /* ========================================
+       HERO VIDEO
+       ======================================== */
+
+    .project-hero__video {
+      position: absolute;
+
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      display: block;
+
+      object-fit: cover;
+
+      object-position: center;
+
+      background: #000;
+    }
+
+
+    /* ========================================
+       BACK
+       ======================================== */
+
+    .back-link {
+  position: fixed;
+
+  z-index: 900;
+
+  left: var(--page-x);
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #fff;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+
+  text-shadow: var(--text-shadow);
+}
+
+
+    .back-link::after {
+      content: "";
+
+      position: absolute;
+
+      left: 0;
+      bottom: -4px;
+
+      width: 100%;
+      height: 1px;
+
+      background: #fff;
+
+      transform:
+        scaleX(0);
+
+      transform-origin:
+        right;
+
+      transition:
+        transform
+        250ms ease;
+    }
+
+
+    .back-link:hover::after {
+      transform:
+        scaleX(1);
+
+      transform-origin:
+        left;
+    }
+
+
+    /* ========================================
+       PROJECT TITLE ON VIDEO
+       ======================================== */
+
+    .project-title {
+      position: absolute;
+
+      z-index: 10;
+
+      left:
+        var(--content-left);
+
+      bottom:
+        clamp(
+          48px,
+          6.2vh,
+          72px
+        );
+
+      color: #fff;
+
+      font-size:
+        var(--text-large);
+
+      font-weight: 700;
+
+      line-height: 1;
+
+      letter-spacing:
+        -0.035em;
+
+      text-transform:
+        uppercase;
+
+      text-shadow:
+        var(--text-shadow);
+    }
+
+
+    /* ========================================
+       PROJECT CONTENT
+       ======================================== */
+
+    .project-content {
+      width: 100%;
+
+      min-height: 100vh;
+
+      background: #000;
+
+      padding:
+        clamp(70px, 8vh, 100px)
+        var(--content-right)
+        clamp(100px, 14vh, 180px)
+        var(--content-left);
+    }
+
+
+    .project-content__inner {
+      width: 100%;
+
+      max-width: 1050px;
+    }
+
+
+    /* ========================================
+       META
+       ======================================== */
+
+    .project-meta {
+      display: grid;
+
+      grid-template-columns:
+        150px
+        minmax(0, 1fr);
+
+      column-gap:
+        52px;
+
+      row-gap:
+        18px;
+
+      width: 100%;
+
+      max-width: 560px;
+
+      font-size:
+        var(--text-small);
+
+      line-height:
+        1.25;
+    }
+
+
+    .project-meta__label {
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          0.7
+        );
+
+      font-size: 16px;
+    }
+
+
+    .project-meta__value {
+      color: #fff;
+
+      font-size: 16px;
+    }
+
+
+    /* ROLE LIST */
+
+    .role-list {
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 16px;
+    }
+
+
+    /* ========================================
+       DESCRIPTION
+       ======================================== */
+
+    .project-description {
+      max-width: 1080px;
+
+      margin-top:
+        clamp(
+          72px,
+          8vw,
+          110px
+        );
+
+      color: #fff;
+
+      font-size:
+        var(--text-large);
+
+      font-weight: 700;
+
+      line-height: 1.35;
+
+      letter-spacing:
+        -0.03em;
+    }
+
+
+    /* ========================================
+       WATCH FULL
+       ======================================== */
+
+    .watch-full {
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 7px;
+
+      margin-top:
+        clamp(
+          100px,
+          10vw,
+          145px
+        );
+
+      color: #fff;
+
+      font-size: 16px;
+
+      font-weight: 700;
+
+      line-height: 1;
+
+      cursor: pointer;
+    }
+
+
+    .watch-full__square {
+      display: block;
+
+      width: 11px;
+      height: 11px;
+
+      flex: 0 0 auto;
+
+      background: #fff;
+    }
+
+
+    .watch-full__text {
+      position: relative;
+    }
+
+
+    .watch-full__text::after {
+      content: "";
+
+      position: absolute;
+
+      left: 0;
+      bottom: -4px;
+
+      width: 100%;
+      height: 1px;
+
+      background: #fff;
+
+      transform:
+        scaleX(0);
+
+      transform-origin:
+        right center;
+
+      transition:
+        transform
+        250ms ease;
+    }
+
+
+    .watch-full:hover
+    .watch-full__text::after {
+      transform:
+        scaleX(1);
+
+      transform-origin:
+        left center;
+    }
+
+
+    /* ========================================
+       TABLET
+       ======================================== */
+
+    @media (max-width: 900px) {
+
+      :root {
+        --content-left: 32px;
+        --content-right: 32px;
+      }
+
+
+      .site-header {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+
+      .site-header__inner {
+        grid-template-columns:
+          auto
+          1fr
+          1fr
+          1fr
+          1fr;
+
+        column-gap: 18px;
+      }
+
+
+      .project-title {
+        bottom: 48px;
+      }
+
+
+      .project-description {
+        max-width: 850px;
+      }
+
+    }
+
+
+    /* ========================================
+       MOBILE
+       ======================================== */
+
+    @media (max-width: 640px) {
+
+      :root {
+        --page-x: 20px;
+
+        --content-left: 20px;
+        --content-right: 20px;
+
+        --text-large:
+          clamp(
+            28px,
+            8vw,
+            40px
+          );
+      }
+
+
+      .site-header {
+        padding-top: 20px;
+      }
+
+
+      .site-header__inner {
+        display: flex;
+
+        align-items: center;
+
+        justify-content:
+          space-between;
+
+        gap: 12px;
+      }
+
+
+      .brand {
+        margin-right: auto;
+      }
+
+
+      .nav-link,
+      .nav-link span {
+        font-size: 16px;
+      }
+
+
+      .project-hero {
+        min-height: 600px;
+      }
+
+
+      .back-link {
+        top: 48%;
+      }
+
+
+      .project-title {
+        left: 20px;
+
+        right: 20px;
+
+        bottom: 32px;
+      }
+
+
+      .project-content {
+        padding-top: 56px;
+
+        padding-bottom: 100px;
+      }
+
+
+      .project-meta {
+        grid-template-columns:
+          100px
+          minmax(0, 1fr);
+
+        column-gap: 24px;
+
+        row-gap: 16px;
+      }
+
+
+      .project-description {
+        margin-top: 64px;
+
+        line-height: 1.25;
+      }
+
+
+      .watch-full {
+        margin-top: 80px;
+      }
+
+    }
+
+
+    /* ========================================
+       VERY SMALL MOBILE
+       ======================================== */
+
+    @media (max-width: 480px) {
+
+      .site-header__inner {
+        gap: 8px;
+      }
+
+
+      .nav-link {
+        letter-spacing:
+          -0.04em;
+      }
+
+
+      .project-meta {
+        grid-template-columns:
+          80px
+          minmax(0, 1fr);
+
+        column-gap: 18px;
+      }
+
+    }
+
+
+    /* ========================================
+       REDUCED MOTION
+       ======================================== */
+
+    @media (
+      prefers-reduced-motion: reduce
+    ) {
+
+      html {
+        scroll-behavior: auto;
+      }
+
+
+      .nav-link::before {
+        transition: none;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- ========================================
+       HEADER
+       ======================================== -->
+
+  <header class="site-header">
+
+    <div class="site-header__inner">
+
+
+      <!-- LOGO -->
+
+      <a
+        class="brand"
+        href="index.html"
+        aria-label="Home"
+      >
+
+        <img
+          id="logoImage"
+          src="assets/logo.svg"
+          alt="Logo"
+        >
+
+      </a>
+
+
+      <!-- HOME -->
+
+      <a
+        class="nav-link"
+        href="index.html"
+      >
+
+        <span>
+          Home
+        </span>
+
+      </a>
+
+
+      <!-- ABOUT ME -->
+
+      <a
+        class="nav-link"
+        href="aboutme.html"
+      >
+
+        <span>
+          About me
+        </span>
+
+      </a>
+
+
+      <!-- PROJECTS ACTIVE -->
+
+      <a
+        class="nav-link active"
+        href="projects.html"
+        aria-current="page"
+      >
+
+        <span>
+          Projects
+        </span>
+
+      </a>
+
+
+      <!-- CONTACTS -->
+
+      <a
+        class="nav-link"
+        href="contacts.html"
+      >
+
+        <span>
+          Contacts
+        </span>
+
+      </a>
+
+
+    </div>
+
+  </header>
+
+
+
+  <!-- ========================================
+       HERO VIDEO
+       ======================================== -->
+
+  <section class="project-hero">
+
+
+    <!-- VIDEO -->
+
+    <video
+      class="project-hero__video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+    >
+
+      <source
+        src="assets/2D a1.webm"
+        type="video/webm"
+      >
+
+    </video>
+
+
+
+    <!-- BACK -->
+
+    <a
+  class="back-link"
+  href="#"
+  id="backButton"
+>
+  Back
+</a>
+
+
+    <!-- PROJECT NAME -->
+
+    <h1 class="project-title">
+      MOUTHPIECE
+    </h1>
+
+
+  </section>
+
+
+
+  <!-- ========================================
+       PROJECT INFORMATION
+       ======================================== -->
+
+  <main class="project-content">
+
+    <div class="project-content__inner">
+
+
+      <!-- META INFORMATION -->
+
+      <div class="project-meta">
+
+
+        <!-- CATEGORY -->
+
+        <div class="project-meta__label">
+          Category
+        </div>
+
+        <div class="project-meta__value">
+          2D Morphing Animation
+        </div>
+
+
+
+        <!-- YEAR -->
+
+        <div class="project-meta__label">
+          Year
+        </div>
+
+        <div class="project-meta__value">
+          2025
+        </div>
+
+
+
+        <!-- ROLE -->
+
+        <div class="project-meta__label">
+          Role
+        </div>
+
+        <div class="project-meta__value">
+
+          <div class="role-list">
+
+            
+            
+            <span>
+              Individual Project
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ====================================
+           DESCRIPTION
+           ==================================== -->
+
+      <p class="project-description">
+
+        A 2D frame by frame on paper animation about pepperoni pizza, my phone, a water drop (actually more like blood drop
+from my piercings), my piercings, and me :3
+
+      </p>
+
+
+
+      <!-- ====================================
+           WATCH FULL
+
+           Thay "#" bằng link video sau này.
+           ==================================== -->
+
+      <a
+  class="watch-full"
+  href="https://youtu.be/GzFO44SMjjg"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+
+        <span
+          class="watch-full__square"
+          aria-hidden="true"
+        ></span>
+
+        <span class="watch-full__text">
+          Watch full
+        </span>
+
+      </a>
+
+
+    </div>
+
+  </main>
+
+
+
+  <!-- ========================================
+       JAVASCRIPT
+       ======================================== -->
+
+  <script>
+
+    (() => {
+
+
+      /* =====================================
+         LOGO LOOP
+         ===================================== */
+
+      const logoImage =
+        document.getElementById(
+          "logoImage"
+        );
+
+
+      const logos = [
+
+        "assets/logo.svg",
+
+        "assets/logo1.svg",
+
+        "assets/logo2.svg",
+
+        "assets/logo3.svg"
+
+      ];
+
+
+      let currentLogoIndex = 0;
+
+
+
+      /*
+        Preload toàn bộ logo trước
+        để khi đổi logo không bị flash.
+      */
+
+      logos.forEach(
+        src => {
+
+          const image =
+            new Image();
+
+
+          image.src =
+            src;
+
+        }
+      );
+
+
+
+      /*
+        logo.svg
+        ↓ 2s
+        logo1.svg
+        ↓ 2s
+        logo2.svg
+        ↓ 2s
+        logo3.svg
+        ↓ 2s
+        logo.svg
+        ...
+      */
+
+      window.setInterval(
+        () => {
+
+          currentLogoIndex =
+            (
+              currentLogoIndex + 1
+            )
+            %
+            logos.length;
+
+
+          logoImage.src =
+            logos[
+              currentLogoIndex
+            ];
+
+        },
+        2000
+      );
+
+
+    })();
+
+    /* =====================================
+   BACK TO PREVIOUS PAGE
+   ===================================== */
+
+const backButton =
+  document.getElementById("backButton");
+
+backButton.addEventListener(
+  "click",
+  event => {
+
+    event.preventDefault();
+
+    /*
+      Nếu có trang trước đó
+      thì quay lại đúng trang đó.
+    */
+
+    if (document.referrer) {
+
+      window.history.back();
+
+    }
+
+    /*
+      Nếu user mở project detail
+      trực tiếp bằng URL / bookmark,
+      fallback về project.html.
+    */
+
+    else {
+
+      window.location.href =
+        "project.html";
+
+    }
+
+  }
+);
+  </script>
+
+
+</body>
+
+</html>

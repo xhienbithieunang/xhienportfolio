@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<link
+  rel="icon"
+  type="image/svg+xml"
+  href="assets/logotab.svg"
+>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Contacts</title>
+
+  <style>
+
+    :root {
+      --bg: #000;
+      --white: #fff;
+
+      /* ========================================
+         HEADER
+         ======================================== */
+
+      --page-x:
+        clamp(20px, 3.05vw, 44px);
+
+      --header-y:
+        clamp(18px, 2vw, 28px);
+
+
+      /* ========================================
+         TYPOGRAPHY
+         ======================================== */
+
+      --font-small: 16px;
+      --font-title: 40px;
+
+
+      /* ========================================
+         SHADOW
+         ======================================== */
+
+      --text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.75),
+        0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+
+
+    /* ========================================
+       RESET
+       ======================================== */
+
+    * {
+      box-sizing: border-box;
+
+      margin: 0;
+      padding: 0;
+    }
+
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+
+      overflow: hidden;
+
+      background: var(--bg);
+
+      color: var(--white);
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      -webkit-font-smoothing:
+        antialiased;
+
+      text-rendering:
+        optimizeLegibility;
+    }
+
+
+    body {
+      position: relative;
+    }
+
+
+    a {
+      color: inherit;
+
+      text-decoration: none;
+    }
+
+
+
+    /* ========================================
+       BACKGROUND IMAGE
+       ======================================== */
+
+    .contact-background {
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 0;
+
+      width: 100%;
+      height: 100%;
+
+      overflow: hidden;
+
+      background: #000;
+    }
+
+
+    .contact-background video {
+  position: absolute;
+
+  inset: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  /*
+    Video trầm xuống 60%
+  */
+  opacity: 0.6;
+
+  background: #000;
+
+  pointer-events: none;
+}
+
+
+
+    /*
+      Overlay rất nhẹ để text ổn định
+      nếu ảnh background quá sáng.
+    */
+
+    .contact-background::after {
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      background:
+        rgba(0, 0, 0, 0.04);
+
+      pointer-events: none;
+    }
+
+
+
+    /* ========================================
+       HEADER
+       ======================================== */
+
+    .site-header {
+      position: fixed;
+
+      top: 0;
+      left: 0;
+      right: 0;
+
+      z-index: 1000;
+
+      padding:
+        var(--header-y)
+        var(--page-x)
+        0;
+
+      pointer-events: none;
+    }
+
+
+    .site-header__inner {
+      width: 100%;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(5, 1fr);
+
+      align-items: start;
+
+      pointer-events: auto;
+    }
+
+
+
+    /* ========================================
+       LOGO
+       ======================================== */
+
+    .brand {
+      justify-self: start;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      height: 24px;
+    }
+
+
+    .brand img {
+      display: block;
+
+      width: auto;
+
+      height:
+        clamp(
+          18px,
+          1.7vw,
+          24px
+        );
+
+      filter:
+        drop-shadow(
+          0 1px 3px
+          rgba(0, 0, 0, 0.65)
+        );
+    }
+
+
+
+    /* ========================================
+       NAVIGATION
+       ======================================== */
+
+    .nav-link {
+      position: relative;
+
+      justify-self: center;
+
+      display: inline-flex;
+
+      align-items: center;
+      justify-content: center;
+
+      padding:
+        1px 2px;
+
+      overflow: hidden;
+
+      font-size: 16px;
+      font-weight: 400;
+
+      line-height: 1;
+
+      white-space: nowrap;
+    }
+
+
+
+    /* ========================================
+       NAV WHITE BOX
+       ======================================== */
+
+    .nav-link::before {
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      z-index: 1;
+
+      background: #fff;
+
+      transform:
+        scaleX(0);
+
+      transform-origin:
+        right center;
+
+      transition:
+        transform
+        350ms
+        cubic-bezier(
+          .76,
+          0,
+          .24,
+          1
+        );
+    }
+
+
+    /*
+      Hover:
+      box chạy từ trái sang phải.
+    */
+
+    .nav-link:not(.active):hover::before {
+      transform:
+        scaleX(1);
+
+      transform-origin:
+        left center;
+    }
+
+
+
+    /* ========================================
+       NAV TEXT
+       ======================================== */
+
+    .nav-link > span {
+      position: relative;
+
+      z-index: 2;
+
+      display: block;
+
+      color: #fff;
+
+      font-size: 16px;
+
+      text-shadow:
+        var(--text-shadow);
+
+      transition:
+        color 140ms ease,
+        text-shadow 140ms ease;
+    }
+
+
+    .nav-link:not(.active):hover > span {
+      color: #000;
+
+      text-shadow: none;
+    }
+
+
+
+    /* ========================================
+       CONTACTS ACTIVE
+       ======================================== */
+
+    .nav-link.active::before {
+      transform:
+        scaleX(1);
+
+      transform-origin:
+        left center;
+
+      transition: none;
+    }
+
+
+    .nav-link.active > span {
+      color: #000;
+
+      text-shadow: none;
+    }
+
+
+
+    /* ========================================
+       CONTACT CONTENT
+       ======================================== */
+
+    .contact-content {
+      position: relative;
+
+      z-index: 10;
+
+      width: 100%;
+      height: 100vh;
+      height: 100svh;
+
+      pointer-events: none;
+    }
+
+
+
+    /* ========================================
+       FEED MY CAT
+       ======================================== */
+
+    .contact-title {
+      position: absolute;
+
+      /*
+        Screenshot đặt title hơi lệch trái
+        so với center tuyệt đối.
+        Ở 1440px ≈ 387px.
+      */
+
+      left:
+        clamp(
+          28px,
+          26.9vw,
+          387px
+        );
+
+      top:
+        47.5%;
+
+      transform:
+        translateY(-50%);
+
+      color: #fff;
+
+      font-size:
+        var(--font-title);
+
+      font-weight: 700;
+
+      line-height: 1;
+
+      letter-spacing:
+        -0.025em;
+
+      text-transform:
+        uppercase;
+
+      text-shadow:
+        var(--text-shadow);
+
+      pointer-events: auto;
+
+      opacity: 0;
+
+      animation:
+        fadeFromLeft
+        900ms
+        cubic-bezier(.22, 1, .36, 1)
+        100ms
+        forwards;
+    }
+
+
+
+    /* ========================================
+       CONTACT DETAILS
+       ======================================== */
+
+    .contact-details {
+      position: absolute;
+
+      left:
+        clamp(
+          28px,
+          6vw,
+          86px
+        );
+
+      bottom:
+        clamp(
+          48px,
+          6vh,
+          62px
+        );
+
+      display: grid;
+
+      grid-template-columns:
+        minmax(230px, 1fr)
+        minmax(280px, 1.3fr);
+
+      column-gap:
+        clamp(
+          70px,
+          8vw,
+          120px
+        );
+
+      row-gap:
+        54px;
+
+      width:
+        min(
+          620px,
+          55vw
+        );
+
+      pointer-events: auto;
+    }
+
+
+
+    /* ========================================
+       CONTACT ITEM
+       ======================================== */
+
+    .contact-item {
+      opacity: 0;
+
+      transform:
+        translateX(-35px);
+
+      animation:
+        contactItemIn
+        850ms
+        cubic-bezier(.22, 1, .36, 1)
+        forwards;
+    }
+
+
+    /*
+      Stagger nhẹ khi load
+    */
+
+    .contact-item:nth-child(1) {
+      animation-delay:
+        220ms;
+    }
+
+
+    .contact-item:nth-child(2) {
+      animation-delay:
+        300ms;
+    }
+
+
+    .contact-item:nth-child(3) {
+      animation-delay:
+        380ms;
+    }
+
+
+    .contact-item:nth-child(4) {
+      animation-delay:
+        460ms;
+    }
+
+
+
+    .contact-label {
+      margin-bottom:
+        14px;
+
+      color: #fff;
+
+      font-size: 16px;
+
+      font-weight: 400;
+
+      line-height: 1;
+
+      text-shadow:
+        var(--text-shadow);
+    }
+
+
+    .contact-value {
+      color: #fff;
+
+      font-size: 16px;
+
+      font-weight: 700;
+
+      line-height: 1.3;
+
+      text-shadow:
+        var(--text-shadow);
+    }
+
+
+
+    /* ========================================
+       INSTAGRAM LINK
+       ======================================== */
+
+    .instagram-link {
+      position: relative;
+
+      display: inline-block;
+
+      color: #fff;
+
+      font-size: 16px;
+
+      font-weight: 700;
+
+      text-shadow:
+        var(--text-shadow);
+
+      transition:
+        opacity 160ms ease;
+    }
+
+
+    .instagram-link::after {
+      content: "";
+
+      position: absolute;
+
+      left: 0;
+      bottom: -4px;
+
+      width: 100%;
+      height: 1px;
+
+      background: #fff;
+
+      transform:
+        scaleX(0);
+
+      transform-origin:
+        right center;
+
+      transition:
+        transform
+        280ms
+        cubic-bezier(
+          .76,
+          0,
+          .24,
+          1
+        );
+    }
+
+
+    .instagram-link:hover::after {
+      transform:
+        scaleX(1);
+
+      transform-origin:
+        left center;
+    }
+
+
+    .instagram-link:hover {
+      opacity: 0.8;
+    }
+
+
+
+    /* ========================================
+       LOAD ANIMATION
+       ======================================== */
+
+    @keyframes fadeFromLeft {
+
+      from {
+        opacity: 0;
+
+        transform:
+          translate(
+            -55px,
+            -50%
+          );
+      }
+
+
+      to {
+        opacity: 1;
+
+        transform:
+          translate(
+            0,
+            -50%
+          );
+      }
+
+    }
+
+
+
+    @keyframes contactItemIn {
+
+      from {
+        opacity: 0;
+
+        transform:
+          translateX(-35px);
+      }
+
+
+      to {
+        opacity: 1;
+
+        transform:
+          translateX(0);
+      }
+
+    }
+
+
+
+    /* ========================================
+       TABLET
+       ======================================== */
+
+    @media (max-width: 1000px) {
+
+      .site-header {
+        padding-left:
+          24px;
+
+        padding-right:
+          24px;
+      }
+
+
+      .site-header__inner {
+        grid-template-columns:
+          auto
+          1fr
+          1fr
+          1fr
+          1fr;
+
+        column-gap:
+          18px;
+      }
+
+
+      .contact-title {
+        left:
+          18vw;
+      }
+
+
+      .contact-details {
+        left: 5vw;
+
+        width:
+          min(
+            620px,
+            80vw
+          );
+
+        column-gap:
+          60px;
+      }
+
+    }
+
+
+
+    /* ========================================
+       MOBILE
+       ======================================== */
+
+    @media (max-width: 700px) {
+
+      :root {
+        --page-x:
+          20px;
+
+        --font-title:
+          clamp(
+            30px,
+            9vw,
+            40px
+          );
+      }
+
+
+      .site-header {
+        padding-top:
+          20px;
+      }
+
+
+      .site-header__inner {
+        display: flex;
+
+        align-items: center;
+
+        justify-content:
+          space-between;
+
+        gap:
+          12px;
+      }
+
+
+      .brand {
+        margin-right: auto;
+      }
+
+
+      .nav-link,
+      .nav-link > span {
+        font-size: 16px;
+      }
+
+
+      /*
+        Mobile title chuyển gần center hơn.
+      */
+
+      .contact-title {
+        left:
+          24px;
+
+        right:
+          24px;
+
+        top:
+          38%;
+
+        text-align:
+          center;
+      }
+
+
+      /*
+        Contacts chuyển thành 1 column.
+      */
+
+      .contact-details {
+        left:
+          24px;
+
+        right:
+          24px;
+
+        bottom:
+          40px;
+
+        width:
+          auto;
+
+        grid-template-columns:
+          1fr
+          1fr;
+
+        column-gap:
+          30px;
+
+        row-gap:
+          34px;
+      }
+
+    }
+
+
+
+    /* ========================================
+       SMALL MOBILE
+       ======================================== */
+
+    @media (max-width: 480px) {
+
+      .site-header__inner {
+        gap: 8px;
+      }
+
+
+      .nav-link {
+        letter-spacing:
+          -0.04em;
+      }
+
+
+      .contact-title {
+        top:
+          34%;
+      }
+
+
+      .contact-details {
+        grid-template-columns:
+          1fr;
+
+        row-gap:
+          24px;
+
+        bottom:
+          30px;
+      }
+
+
+      .contact-label {
+        margin-bottom:
+          8px;
+      }
+
+    }
+
+
+
+    /* ========================================
+       REDUCED MOTION
+       ======================================== */
+
+    @media (
+      prefers-reduced-motion: reduce
+    ) {
+
+      .contact-title,
+      .contact-item {
+        opacity: 1;
+
+        transform: none;
+
+        animation: none;
+      }
+
+
+      .nav-link::before,
+      .instagram-link::after {
+        transition: none;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- ========================================
+       BACKGROUND IMAGE
+       ======================================== -->
+
+  <div class="contact-background">
+
+  <video
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+  >
+    <source
+      src="assets/contacts.webm"
+      type="video/webm"
+    >
+  </video>
+
+</div>
+
+
+
+  <!-- ========================================
+       HEADER
+       ======================================== -->
+
+  <header class="site-header">
+
+    <div class="site-header__inner">
+
+
+      <!-- LOGO -->
+
+      <a
+        class="brand"
+        href="index.html"
+        aria-label="Home"
+      >
+
+        <img
+          id="logoImage"
+          src="assets/logo.svg"
+          alt="Logo"
+        >
+
+      </a>
+
+
+
+      <!-- HOME -->
+
+      <a
+        class="nav-link"
+        href="index.html"
+      >
+
+        <span>
+          Home
+        </span>
+
+      </a>
+
+
+
+      <!-- ABOUT ME -->
+
+      <a
+        class="nav-link"
+        href="aboutme.html"
+      >
+
+        <span>
+          About me
+        </span>
+
+      </a>
+
+
+
+      <!-- PROJECTS -->
+
+      <a
+        class="nav-link"
+        href="projects.html"
+      >
+
+        <span>
+          Projects
+        </span>
+
+      </a>
+
+
+
+      <!-- CONTACTS ACTIVE -->
+
+      <a
+        class="nav-link active"
+        href="contacts.html"
+        aria-current="page"
+      >
+
+        <span>
+          Contacts
+        </span>
+
+      </a>
+
+
+    </div>
+
+  </header>
+
+
+
+  <!-- ========================================
+       CONTACT CONTENT
+       ======================================== -->
+
+  <main class="contact-content">
+
+
+    <!-- ======================================
+         TITLE
+         ====================================== -->
+
+    <h1 class="contact-title">
+      Feed My Cat!
+    </h1>
+
+
+
+    <!-- ======================================
+         DETAILS
+         ====================================== -->
+
+    <section class="contact-details">
+
+
+      <!-- EMAIL -->
+
+      <div class="contact-item">
+
+        <div class="contact-label">
+          E:
+        </div>
+
+        <div class="contact-value">
+          xhien445@gmail.com
+        </div>
+
+      </div>
+
+
+
+      <!-- ADDRESS -->
+
+      <div class="contact-item">
+
+        <div class="contact-label">
+          A:
+        </div>
+
+        <div class="contact-value">
+          Long Binh, Ho Chi Minh city
+        </div>
+
+      </div>
+
+
+
+      <!-- SOCIAL -->
+
+      <div class="contact-item">
+
+        <div class="contact-label">
+          S:
+        </div>
+
+
+        <!--
+          Thay URL Instagram của bạn ở đây.
+        -->
+
+        <a
+          class="instagram-link"
+          href="https://www.instagram.com/xhienbithieunang/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Instagram
+        </a>
+
+      </div>
+
+
+
+      <!-- PHONE -->
+
+      <div class="contact-item">
+
+        <div class="contact-label">
+          P:
+        </div>
+
+        <div class="contact-value">
+          +84 34 408 9248
+        </div>
+
+      </div>
+
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- ========================================
+       JAVASCRIPT
+       ======================================== -->
+
+  <script>
+
+    (() => {
+
+
+      /* =====================================
+         LOGO LOOP
+         ===================================== */
+
+      const logoImage =
+        document.getElementById(
+          "logoImage"
+        );
+
+
+      const logos = [
+        "assets/logo.svg",
+        "assets/logo1.svg",
+        "assets/logo2.svg",
+        "assets/logo3.svg"
+      ];
+
+
+      let currentLogoIndex = 0;
+
+
+
+      /*
+        Preload logo trước
+        để lúc đổi không flash.
+      */
+
+      logos.forEach(
+        src => {
+
+          const image =
+            new Image();
+
+
+          image.src =
+            src;
+
+        }
+      );
+
+
+
+      /*
+        Đổi logo mỗi 2 giây.
+      */
+
+      window.setInterval(
+        () => {
+
+          currentLogoIndex =
+            (
+              currentLogoIndex + 1
+            )
+            %
+            logos.length;
+
+
+          logoImage.src =
+            logos[
+              currentLogoIndex
+            ];
+
+        },
+        2000
+      );
+
+
+    })();
+
+  </script>
+
+</body>
+
+</html>

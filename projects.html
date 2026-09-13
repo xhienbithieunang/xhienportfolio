@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<link
+  rel="icon"
+  type="image/svg+xml"
+  href="assets/logotab.svg"
+>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Projects</title>
+
+  <style>
+    :root {
+      --bg: #000;
+      --white: #fff;
+
+      /* Header */
+      --page-x: clamp(20px, 3.05vw, 44px);
+      --header-y: clamp(18px, 2vw, 28px);
+
+      /* Text */
+      --font-size: 16px;
+
+      /* Shadow giống các page trước */
+      --text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.8),
+        0 0 10px rgba(0, 0, 0, 0.35);
+    }
+
+
+    /* ========================================
+       RESET
+       ======================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    html,
+    body {
+      width: 100%;
+
+      background: var(--bg);
+      color: var(--white);
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      font-size: 16px;
+
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+
+    body {
+      min-height: 100vh;
+    }
+
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+
+    /* ========================================
+       HEADER
+       ======================================== */
+
+    .site-header {
+      position: fixed;
+
+      top: 0;
+      left: 0;
+      right: 0;
+
+      z-index: 1000;
+
+      padding:
+        var(--header-y)
+        var(--page-x)
+        0;
+
+      pointer-events: none;
+    }
+
+
+    .site-header__inner {
+      width: 100%;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(5, 1fr);
+
+      align-items: start;
+
+      pointer-events: auto;
+    }
+
+
+    /* ========================================
+       LOGO
+       ======================================== */
+
+    .brand {
+      justify-self: start;
+
+      display: inline-flex;
+      align-items: center;
+
+      height: 24px;
+    }
+
+
+    .brand img {
+      display: block;
+
+      width: auto;
+
+      height:
+        clamp(
+          18px,
+          1.7vw,
+          24px
+        );
+
+      filter:
+        drop-shadow(
+          0 1px 3px rgba(0, 0, 0, 0.65)
+        );
+    }
+
+
+    /* ========================================
+       NAVIGATION
+       ======================================== */
+
+    .nav-link {
+      position: relative;
+
+      justify-self: center;
+
+      display: inline-flex;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 1px 2px;
+
+      overflow: hidden;
+
+      font-size: 16px;
+      font-weight: 400;
+
+      line-height: 1;
+
+      white-space: nowrap;
+    }
+
+
+    /*
+      Box trắng.
+      Bình thường thu về bên phải.
+    */
+
+    .nav-link::before {
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      z-index: 1;
+
+      background: #fff;
+
+      transform: scaleX(0);
+
+      transform-origin:
+        right center;
+
+      transition:
+        transform
+        350ms
+        cubic-bezier(.76, 0, .24, 1);
+    }
+
+
+    /*
+      Hover:
+      box chạy từ trái sang phải.
+    */
+
+    .nav-link:not(.active):hover::before {
+      transform: scaleX(1);
+
+      transform-origin:
+        left center;
+    }
+
+
+    .nav-link span {
+      position: relative;
+
+      z-index: 2;
+
+      color: #fff;
+
+      font-size: 16px;
+
+      text-shadow:
+        var(--text-shadow);
+
+      transition:
+        color 140ms ease,
+        text-shadow 140ms ease;
+    }
+
+
+    .nav-link:not(.active):hover span {
+      color: #000;
+
+      text-shadow: none;
+    }
+
+
+    /* ========================================
+       PROJECTS ACTIVE
+       ======================================== */
+
+    .nav-link.active::before {
+      transform: scaleX(1);
+
+      transform-origin:
+        left center;
+
+      transition: none;
+    }
+
+
+    .nav-link.active span {
+      color: #000;
+
+      text-shadow: none;
+    }
+
+
+    /* ========================================
+       EMPTY TOP AREA
+
+       Khoảng đen phía trên giống mockup.
+       ======================================== */
+
+    .projects-intro {
+      width: 100%;
+
+      height:
+        clamp(
+          220px,
+          20.5vw,
+          295px
+        );
+
+      background: #000;
+    }
+
+
+    /* ========================================
+       PROJECT GRID
+
+       Dùng grid 6 columns:
+
+       01 = 3 columns
+       02 = 3 columns
+
+       03 = 2 columns
+       04 = 2 columns
+       05 = 2 columns
+       06 = centered 2 columns
+       ======================================== */
+
+    .projects-grid {
+      display: grid;
+
+      width: 100%;
+
+      grid-template-columns:
+        repeat(6, minmax(0, 1fr));
+
+      background: #000;
+    }
+
+
+    /* ========================================
+       PROJECT CARD
+       ======================================== */
+
+    .project-card {
+      position: relative;
+
+      min-width: 0;
+
+      background: #000;
+
+      cursor: pointer;
+    }
+
+
+    /* ========================================
+       PROJECT LOAD ANIMATION
+       Fade + slide từ trái sang khi vào page
+       ======================================== */
+
+    .project-card {
+      opacity: 0;
+      transform: translateX(-48px);
+
+      animation:
+        projectFadeIn
+        900ms
+        cubic-bezier(.22, 1, .36, 1)
+        forwards;
+    }
+
+    .project-card:nth-child(1) { animation-delay: 80ms; }
+    .project-card:nth-child(2) { animation-delay: 150ms; }
+    .project-card:nth-child(3) { animation-delay: 220ms; }
+    .project-card:nth-child(4) { animation-delay: 290ms; }
+    .project-card:nth-child(5) { animation-delay: 360ms; }
+    .project-card:nth-child(6) { animation-delay: 430ms; }
+
+    @keyframes projectFadeIn {
+      from {
+        opacity: 0;
+        transform: translateX(-48px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+
+    .project-card:nth-child(1),
+    .project-card:nth-child(2) {
+      grid-column:
+        span 3;
+    }
+
+
+    .project-card:nth-child(3),
+    .project-card:nth-child(4),
+    .project-card:nth-child(5) {
+      grid-column:
+        span 2;
+    }
+/* PROJECT 06 - căn bên trái hàng cuối */
+.project-card:nth-child(6) {
+  grid-column: 1 / span 2;
+}
+    
+
+
+    /* ========================================
+       VIDEO AREA
+       ======================================== */
+
+    .project-media {
+  position: relative;
+
+  width: 100%;
+
+  overflow: hidden;
+
+  background: #000;
+}
+
+
+    /*
+      Hai project đầu:
+      panel rộng hơn và thấp hơn.
+    */
+
+    .project-card:nth-child(1) .project-media,
+    .project-card:nth-child(2) .project-media {
+      aspect-ratio: 2.05 / 1;
+    }
+
+
+    /*
+      Ba project dưới:
+      panel hẹp hơn một chút.
+    */
+
+    .project-card:nth-child(3) .project-media,
+    .project-card:nth-child(4) .project-media,
+    .project-card:nth-child(5) .project-media,
+    .project-card:nth-child(6) .project-media {
+      aspect-ratio: 1.65 / 1;
+    }
+
+
+    .project-media video {
+  position: absolute;
+
+  top: -1px;
+  left: -1px;
+
+  display: block;
+
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+
+  object-fit: cover;
+  object-position: center;
+
+  background: #000;
+
+  pointer-events: none;
+}
+
+
+    /*
+      Overlay cực nhẹ.
+      Có thể bỏ nếu không cần.
+    */
+
+    .project-media::after {
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      pointer-events: none;
+
+      background:
+        rgba(0, 0, 0, 0.02);
+    }
+
+
+    /* ========================================
+       PROJECT INFO
+       ======================================== */
+
+    .project-info {
+      display: grid;
+
+      grid-template-columns:
+        64px
+        minmax(0, 1.45fr)
+        minmax(90px, .85fr);
+
+      column-gap: 16px;
+
+      align-items: start;
+
+      width: 100%;
+
+      /*
+        Khoảng đen dưới mỗi video
+        giống design.
+      */
+
+      min-height:
+        clamp(
+          180px,
+          16vw,
+          235px
+        );
+
+      padding:
+        12px
+        24px
+        32px;
+
+      background: #000;
+
+      color: #fff;
+
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+
+    .project-number {
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          0.7
+        );
+
+      font-size: 16px;
+
+      white-space: nowrap;
+    }
+
+
+    .project-name {
+      color: #fff;
+
+      font-size: 16px;
+
+      line-height: 1.45;
+    }
+
+
+    .project-year {
+      margin-top: 5px;
+
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          0.7
+        );
+
+      font-size: 16px;
+    }
+
+
+    .project-category {
+  color: #fff;
+
+  font-size: 16px;
+
+  line-height: 1.45;
+
+  text-align: right;
+
+  justify-self: end;
+}
+
+
+    /* ========================================
+       HOVER
+
+       Video chỉ play bằng JS.
+       CSS chỉ thêm feedback rất nhẹ.
+       ======================================== */
+
+    .project-card .project-media video {
+      transition:
+        transform 600ms
+        cubic-bezier(.22, 1, .36, 1);
+    }
+
+
+    .project-card:hover
+    .project-media video {
+      transform:
+        scale(1.005);
+    }
+
+
+    /* ========================================
+       TABLET
+       ======================================== */
+
+    @media (max-width: 900px) {
+
+      .site-header {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+
+      .site-header__inner {
+        grid-template-columns:
+          auto
+          1fr
+          1fr
+          1fr
+          1fr;
+
+        column-gap: 18px;
+      }
+
+
+      /*
+        Tablet chuyển thành 2 cột.
+      */
+
+      .project-card:nth-child(n) {
+        grid-column:
+          span 3;
+      }
+
+
+      .project-card:nth-child(n)
+      .project-media {
+        aspect-ratio:
+          1.75 / 1;
+      }
+
+
+      .project-info {
+        grid-template-columns:
+          52px
+          minmax(0, 1fr);
+
+        min-height: 190px;
+
+        padding:
+          12px
+          20px
+          28px;
+      }
+
+
+      .project-category {
+        grid-column: 2;
+
+        margin-top: 4px;
+
+        opacity: 1;
+      }
+
+    }
+
+
+    /* ========================================
+       MOBILE
+       ======================================== */
+
+    @media (max-width: 640px) {
+
+      :root {
+        --page-x: 20px;
+      }
+
+
+      .site-header {
+        padding-top: 20px;
+      }
+
+
+      .site-header__inner {
+        display: flex;
+
+        align-items: center;
+
+        justify-content:
+          space-between;
+
+        gap: 12px;
+      }
+
+
+      .brand {
+        margin-right: auto;
+      }
+
+
+      .nav-link,
+      .nav-link span {
+        font-size: 16px;
+      }
+
+
+      .projects-intro {
+        height: 180px;
+      }
+
+
+      /*
+        Mobile = 1 project / row.
+      */
+
+      .project-card:nth-child(n) {
+        grid-column:
+          1 / -1;
+      }
+
+
+      .project-card:nth-child(n)
+      .project-media {
+        aspect-ratio:
+          16 / 10;
+      }
+
+
+      .project-info {
+        grid-template-columns:
+          52px
+          minmax(0, 1fr)
+          auto;
+
+        column-gap: 14px;
+
+        min-height: 170px;
+
+        padding:
+          12px
+          20px
+          26px;
+      }
+
+
+      .project-category {
+        grid-column: auto;
+
+        margin-top: 0;
+
+        text-align: right;
+      }
+
+    }
+
+
+    /* ========================================
+       SMALL MOBILE
+       ======================================== */
+
+    @media (max-width: 480px) {
+
+      .site-header__inner {
+        gap: 8px;
+      }
+
+
+      .nav-link {
+        letter-spacing:
+          -0.04em;
+      }
+
+
+      .project-info {
+        grid-template-columns:
+          42px
+          minmax(0, 1fr);
+
+        gap: 12px;
+      }
+
+
+      .project-category {
+        grid-column: 2;
+
+        margin-top: 5px;
+
+        text-align: left;
+      }
+
+    }
+
+
+    /* ========================================
+       REDUCED MOTION
+       ======================================== */
+
+    @media (
+      prefers-reduced-motion: reduce
+    ) {
+
+      .nav-link::before,
+      .project-media video {
+        transition: none;
+      }
+
+      .project-card {
+        opacity: 1;
+        transform: none;
+        animation: none;
+      }
+
+    }
+/* Hide scrollbar - vẫn scroll được */
+
+html {
+  scrollbar-width: none; /* Firefox */
+}
+
+body {
+  -ms-overflow-style: none; /* IE / old Edge */
+}
+
+/* Chrome, Safari, Edge */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- ========================================
+       HEADER
+       ======================================== -->
+
+  <header class="site-header">
+
+    <div class="site-header__inner">
+
+
+      <!-- LOGO -->
+
+      <a
+        class="brand"
+        href="index.html"
+        aria-label="Home"
+      >
+
+        <img
+          id="logoImage"
+          src="assets/logo.svg"
+          alt="Logo"
+        >
+
+      </a>
+
+
+      <!-- HOME -->
+
+      <a
+        class="nav-link"
+        href="index.html"
+      >
+
+        <span>
+          Home
+        </span>
+
+      </a>
+
+
+      <!-- ABOUT -->
+
+      <a
+        class="nav-link"
+        href="aboutme.html"
+      >
+
+        <span>
+          About me
+        </span>
+
+      </a>
+
+
+      <!-- PROJECTS -->
+
+      <a
+        class="nav-link active"
+        href="projects.html"
+        aria-current="page"
+      >
+
+        <span>
+          Projects
+        </span>
+
+      </a>
+
+
+      <!-- CONTACT -->
+
+      <a
+        class="nav-link"
+        href="contacts.html"
+      >
+
+        <span>
+          Contacts
+        </span>
+
+      </a>
+
+
+    </div>
+
+  </header>
+
+
+
+  <!-- ========================================
+       TOP BLACK SPACE
+       ======================================== -->
+
+  <div class="projects-intro"></div>
+
+
+
+  <!-- ========================================
+       PROJECTS
+       ======================================== -->
+
+  <main class="projects-grid">
+
+
+    <!-- ======================================
+         PROJECT 01
+         ====================================== -->
+
+    <article
+      class="project-card"
+      data-url="project-toteti.html"
+    >
+
+      <div class="project-media">
+
+        <video
+          muted
+          playsinline
+          loop
+          preload="metadata"
+        >
+
+          <source
+            src="assets/spec2.webm"
+            type="video/webm"
+          >
+
+        </video>
+
+      </div>
+
+
+      <div class="project-info">
+
+        <div class="project-number">
+          N°01
+        </div>
+
+
+        <div>
+
+          <div class="project-name">
+            Tò Te Tí
+          </div>
+
+          <div class="project-year">
+            2026
+          </div>
+
+        </div>
+
+
+        <div class="project-category">
+          Music Video
+        </div>
+
+      </div>
+
+    </article>
+
+
+
+    <!-- ======================================
+         PROJECT 02
+         ====================================== -->
+
+    <article
+      class="project-card"
+      data-url="project-daddyhere.html"
+    >
+
+      <div class="project-media">
+
+        <video
+          muted
+          playsinline
+          loop
+          preload="metadata"
+        >
+
+          <source
+            src="assets/spec2.webm"
+            type="video/webm"
+          >
+
+        </video>
+
+      </div>
+
+
+      <div class="project-info">
+
+        <div class="project-number">
+          N°02
+        </div>
+
+
+        <div>
+
+          <div class="project-name">
+            Daddy's Here
+          </div>
+
+          <div class="project-year">
+            2026
+          </div>
+
+        </div>
+
+
+        <div class="project-category">
+          Stop Motion Short Film
+        </div>
+
+      </div>
+
+    </article>
+
+
+
+    <!-- ======================================
+         PROJECT 03
+         ====================================== -->
+
+    <article
+      class="project-card"
+      data-url="project-constipation.html"
+    >
+
+      <div class="project-media">
+
+        <video
+          muted
+          playsinline
+          loop
+          preload="metadata"
+        >
+
+          <source
+            src="assets/2D a3.webm"
+            type="video/webm"
+          >
+
+        </video>
+
+      </div>
+
+
+      <div class="project-info">
+
+        <div class="project-number">
+          N°03
+        </div>
+
+
+        <div>
+
+          <div class="project-name">
+            When Constipation Became the Ultimate
+            Villain and I Had to Awaken My
+            Excretory Haki
+          </div>
+
+          <div class="project-year">
+            2025
+          </div>
+
+        </div>
+
+
+        <div class="project-category">
+          Short Film
+        </div>
+
+      </div>
+
+    </article>
+
+
+
+    <!-- ======================================
+         PROJECT 04
+         ====================================== -->
+
+    <article
+      class="project-card"
+      data-url="project-mouthpiece.html"
+    >
+
+      <div class="project-media">
+
+        <video
+          muted
+          playsinline
+          loop
+          preload="metadata"
+        >
+
+          <source
+            src="assets/2D a1.webm"
+            type="video/webm"
+          >
+
+        </video>
+
+      </div>
+
+
+      <div class="project-info">
+
+        <div class="project-number">
+          N°04
+        </div>
+
+
+        <div>
+
+          <div class="project-name">
+            Mouth Piece
+          </div>
+
+          <div class="project-year">
+            2025
+          </div>
+
+        </div>
+
+
+        <div class="project-category">
+          2D Animation
+        </div>
+
+      </div>
+
+    </article>
+
+
+
+    <!-- ======================================
+         PROJECT 05
+         ====================================== -->
+
+    <article
+      class="project-card"
+      data-url="project-dv.html"
+    >
+
+      <div class="project-media">
+
+        <video
+          muted
+          playsinline
+          loop
+          preload="metadata"
+        >
+
+          <source
+            src="assets/dv.webm"
+            type="video/webm"
+          >
+
+        </video>
+
+      </div>
+
+
+      <div class="project-info">
+
+        <div class="project-number">
+          N°05
+        </div>
+
+
+        <div>
+
+          <div class="project-name">
+            Untitled
+          </div>
+
+          <div class="project-year">
+            2023
+          </div>
+
+        </div>
+
+
+        <div class="project-category">
+          Motion Graphic
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- ======================================
+         PROJECT 06
+         ====================================== -->
+
+    <article
+      class="project-card"
+      data-url="project-sentinel.html"
+    >
+
+      <div class="project-media">
+
+        <video
+          muted
+          playsinline
+          loop
+          preload="metadata"
+        >
+
+          <source
+            src="assets/sentinel.webm"
+            type="video/webm"
+          >
+
+        </video>
+
+      </div>
+
+
+      <div class="project-info">
+
+        <div class="project-number">
+          N°06
+        </div>
+
+
+        <div>
+
+          <div class="project-name">
+            Sentinel: Plague Control
+          </div>
+
+          <div class="project-year">
+            2025
+          </div>
+
+        </div>
+
+
+        <div class="project-category">
+          Game Trailer
+        </div>
+
+      </div>
+
+    </article>
+
+
+  </main>
+
+
+
+  <!-- ========================================
+       JAVASCRIPT
+       ======================================== -->
+
+  <script>
+
+    (() => {
+
+
+      /* =====================================
+         LOGO LOOP
+         ===================================== */
+
+      const logoImage =
+        document.getElementById(
+          "logoImage"
+        );
+
+
+      const logos = [
+        "assets/logo.svg",
+        "assets/logo1.svg",
+        "assets/logo2.svg",
+        "assets/logo3.svg"
+      ];
+
+
+      let currentLogo = 0;
+
+
+      /*
+        Preload logo để tránh flash
+        khi đổi ảnh.
+      */
+
+      logos.forEach(
+        src => {
+
+          const image =
+            new Image();
+
+
+          image.src =
+            src;
+
+        }
+      );
+
+
+      /*
+        Đổi logo mỗi 2 giây.
+      */
+
+      window.setInterval(
+        () => {
+
+          currentLogo =
+            (
+              currentLogo + 1
+            )
+            %
+            logos.length;
+
+
+          logoImage.src =
+            logos[currentLogo];
+
+        },
+        2000
+      );
+
+
+
+      /* =====================================
+         PROJECT VIDEOS
+         ===================================== */
+
+      const projectCards =
+        document.querySelectorAll(
+          ".project-card"
+        );
+
+
+      projectCards.forEach(
+        card => {
+
+          const video =
+            card.querySelector(
+              "video"
+            );
+
+
+          if (!video) {
+            return;
+          }
+
+
+          /*
+            Đảm bảo ban đầu video đứng yên.
+          */
+
+          video.pause();
+
+
+          /*
+            Hover vào project:
+            video bắt đầu play.
+          */
+
+          card.addEventListener(
+            "mouseenter",
+            () => {
+
+              const playPromise =
+                video.play();
+
+
+              if (
+                playPromise &&
+                typeof playPromise.catch
+                  === "function"
+              ) {
+
+                playPromise.catch(
+                  () => {}
+                );
+
+              }
+
+            }
+          );
+
+
+          /*
+            Hover ra:
+            dừng video và quay về đầu.
+          */
+
+          card.addEventListener(
+            "mouseleave",
+            () => {
+
+              video.pause();
+
+
+              try {
+
+                video.currentTime = 0;
+
+              }
+
+              catch (error) {}
+
+            }
+          );
+
+
+          /*
+            Click project
+            → project detail page.
+          */
+
+          card.addEventListener(
+            "click",
+            () => {
+
+              const url =
+                card.dataset.url;
+
+
+              if (!url) {
+                return;
+              }
+
+
+              window.location.href =
+                url;
+
+            }
+          );
+
+        }
+      );
+
+
+    })();
+
+  </script>
+
+</body>
+
+</html>

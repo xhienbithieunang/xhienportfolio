@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<link
+  rel="icon"
+  type="image/svg+xml"
+  href="assets/logotab.svg"
+>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>About Me</title>
+
+  <style>
+
+    :root {
+      --bg: #000;
+      --white: #fff;
+
+      /* ========================================
+         HEADER
+         ======================================== */
+
+      --page-x:
+        clamp(20px, 3.05vw, 44px);
+
+      --header-y:
+        clamp(18px, 2vw, 28px);
+
+
+      /* ========================================
+         TYPOGRAPHY
+         ======================================== */
+
+      --font-small: 16px;
+      --font-name: 24px;
+
+
+      /* ========================================
+         SHADOW
+         ======================================== */
+
+      --text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.75),
+        0 0 10px rgba(0, 0, 0, 0.25);
+--about-side:
+  clamp(
+    28px,
+    11.8vw,
+    170px
+  );
+    }
+
+.watch-full-corner {
+  position: fixed;
+
+  right: var(--page-x);
+  bottom: 28px;
+
+  z-index: 1000;
+
+  color: #fff;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  line-height: 1;
+
+  text-decoration: none;
+
+  text-shadow:
+    var(--text-shadow);
+
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.watch-full-corner:hover {
+  opacity: 0.75;
+
+  transform:
+    translateY(-2px);
+}
+
+    /* ========================================
+       RESET
+       ======================================== */
+
+    * {
+      box-sizing: border-box;
+
+      margin: 0;
+      padding: 0;
+    }
+
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+
+      overflow: hidden;
+
+      background: var(--bg);
+
+      color: var(--white);
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      -webkit-font-smoothing:
+        antialiased;
+
+      text-rendering:
+        optimizeLegibility;
+    }
+
+
+    body {
+      position: relative;
+    }
+
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+
+
+    /* ========================================
+       BACKGROUND
+       ======================================== */
+
+    .about-background {
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 0;
+
+      width: 100%;
+      height: 100%;
+
+      overflow: hidden;
+
+      background: #000;
+    }
+
+
+    .about-background video {
+      position: absolute;
+
+      inset: 0;
+
+      display: block;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+      object-position: center;
+
+      /*
+        Video trầm xuống theo yêu cầu
+      */
+      opacity: 0.6;
+
+      background: #000;
+
+      pointer-events: none;
+    }
+
+
+
+    /* ========================================
+       OPTIONAL DARK OVERLAY
+
+       Giúp text ổn định hơn khi thay video khác.
+       ======================================== */
+
+    .about-background::after {
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      pointer-events: none;
+
+      background:
+        rgba(0, 0, 0, 0.05);
+    }
+
+
+
+    /* ========================================
+       HEADER
+       ======================================== */
+
+    .site-header {
+      position: fixed;
+
+      top: 0;
+      left: 0;
+      right: 0;
+
+      z-index: 1000;
+
+      padding:
+        var(--header-y)
+        var(--page-x)
+        0;
+
+      pointer-events: none;
+    }
+
+
+    .site-header__inner {
+      width: 100%;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(5, 1fr);
+
+      align-items: start;
+
+      pointer-events: auto;
+    }
+
+
+
+    /* ========================================
+       LOGO
+       ======================================== */
+
+    .brand {
+      justify-self: start;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      height: 24px;
+    }
+
+
+    .brand img {
+      display: block;
+
+      width: auto;
+
+      height:
+        clamp(
+          18px,
+          1.7vw,
+          24px
+        );
+
+      filter:
+        drop-shadow(
+          0 1px 3px rgba(0, 0, 0, 0.65)
+        );
+    }
+
+
+
+    /* ========================================
+       NAVIGATION
+       ======================================== */
+
+    .nav-link {
+      position: relative;
+
+      justify-self: center;
+
+      display: inline-flex;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 1px 2px;
+
+      overflow: hidden;
+
+      font-size: 16px;
+      font-weight: 400;
+
+      line-height: 1;
+
+      white-space: nowrap;
+    }
+
+
+
+    /* ========================================
+       NAV WHITE BOX
+       ======================================== */
+
+    .nav-link::before {
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      z-index: 1;
+
+      background: #fff;
+
+      transform:
+        scaleX(0);
+
+      transform-origin:
+        right center;
+
+      transition:
+        transform
+        350ms
+        cubic-bezier(.76, 0, .24, 1);
+    }
+
+
+    /*
+      Hover:
+      box chạy từ trái → phải.
+    */
+
+    .nav-link:not(.active):hover::before {
+      transform:
+        scaleX(1);
+
+      transform-origin:
+        left center;
+    }
+
+
+
+    /* ========================================
+       NAV TEXT
+       ======================================== */
+
+    .nav-link > span {
+      position: relative;
+
+      z-index: 2;
+
+      display: block;
+
+      color: #fff;
+
+      font-size: 16px;
+
+      text-shadow:
+        var(--text-shadow);
+
+      transition:
+        color 140ms ease,
+        text-shadow 140ms ease;
+    }
+
+
+    .nav-link:not(.active):hover > span {
+      color: #000;
+
+      text-shadow: none;
+    }
+
+
+
+    /* ========================================
+       ABOUT ME ACTIVE
+       ======================================== */
+
+    .nav-link.active::before {
+      transform:
+        scaleX(1);
+
+      transform-origin:
+        left center;
+
+      transition: none;
+    }
+
+
+    .nav-link.active > span {
+      color: #000;
+
+      text-shadow: none;
+    }
+
+
+
+    /* ========================================
+       ABOUT CONTENT
+       ======================================== */
+
+    .about-content {
+      position: relative;
+
+      z-index: 10;
+
+      width: 100%;
+      height: 100vh;
+      height: 100svh;
+
+      pointer-events: none;
+    }
+
+
+
+    /* ========================================
+       LEFT BLOCK
+       ======================================== */
+
+    .about-left {
+  position: absolute;
+
+  left: var(--about-side);
+
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  color: #fff;
+
+  opacity: 0;
+
+  animation:
+    leftFadeUp
+    1000ms
+    cubic-bezier(.22, 1, .36, 1)
+    150ms
+    forwards;
+}
+
+
+    .about-name {
+      font-size: 24px;
+
+      font-weight: 700;
+
+      line-height: 1.15;
+
+      letter-spacing:
+        -0.025em;
+
+      text-transform: uppercase;
+
+      text-shadow:
+        var(--text-shadow);
+    }
+
+
+    .about-location {
+      margin-top: 12px;
+
+      padding-left:
+        clamp(
+          12px,
+          2.6vw,
+          38px
+        );
+
+      color: #fff;
+
+      font-size: 16px;
+
+      font-weight: 400;
+
+      line-height: 1.4;
+
+      text-transform: uppercase;
+
+      text-shadow:
+        var(--text-shadow);
+    }
+
+
+
+    /* ========================================
+       RIGHT BLOCK
+       ======================================== */
+
+    .about-right {
+  position: absolute;
+
+  /*
+    Khoảng cách với mép phải
+    bằng đúng khoảng cách block trái
+    với mép trái.
+  */
+  right: var(--about-side);
+  left: auto;
+
+  top: 42.5%;
+
+  width:
+    min(
+      340px,
+      27vw
+    );
+
+  color: #fff;
+
+  opacity: 0;
+
+  animation:
+    rightFadeDown
+    1000ms
+    cubic-bezier(.22, 1, .36, 1)
+    250ms
+    forwards;
+}
+
+
+    .about-description {
+      color: #fff;
+
+      font-size: 16px;
+
+      font-weight: 400;
+
+      line-height: 1.75;
+
+      letter-spacing:
+        -0.01em;
+
+      text-shadow:
+        var(--text-shadow);
+    }
+
+
+
+    /* ========================================
+       ENTRY ANIMATIONS
+       ======================================== */
+
+    @keyframes leftFadeUp {
+
+      from {
+        opacity: 0;
+
+        transform:
+          translateY(
+            calc(-50% + 45px)
+          );
+      }
+
+
+      to {
+        opacity: 1;
+
+        transform:
+          translateY(-50%);
+      }
+
+    }
+
+
+    @keyframes rightFadeDown {
+
+      from {
+        opacity: 0;
+
+        transform:
+          translateY(-45px);
+      }
+
+
+      to {
+        opacity: 1;
+
+        transform:
+          translateY(0);
+      }
+
+    }
+
+
+
+    /* ========================================
+       TABLET
+       ======================================== */
+
+    @media (max-width: 1000px) {
+
+      .site-header {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+
+      .site-header__inner {
+        grid-template-columns:
+          auto
+          1fr
+          1fr
+          1fr
+          1fr;
+
+        column-gap: 18px;
+      }
+
+
+      .about-left {
+        left: 7vw;
+      }
+
+
+      .about-right {
+        left: auto;
+
+        right: 7vw;
+
+        width:
+          min(
+            320px,
+            35vw
+          );
+      }
+
+    }
+
+
+
+    /* ========================================
+       MOBILE / PORTRAIT
+       ======================================== */
+
+    @media (max-width: 700px) {
+
+      :root {
+        --page-x: 20px;
+      }
+
+
+      .site-header {
+        padding-top: 20px;
+      }
+
+
+      .site-header__inner {
+        display: flex;
+
+        align-items: center;
+
+        justify-content:
+          space-between;
+
+        gap: 12px;
+      }
+
+
+      .brand {
+        margin-right: auto;
+      }
+
+
+      .nav-link,
+      .nav-link > span {
+        font-size: 16px;
+      }
+
+
+      /*
+        Mobile:
+        hai block chuyển sang vertical layout.
+      */
+
+      .about-content {
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        gap:
+          clamp(
+            70px,
+            12vh,
+            110px
+          );
+
+        padding:
+          110px
+          24px
+          50px;
+      }
+
+
+      .about-left,
+      .about-right {
+        position: relative;
+
+        top: auto;
+        left: auto;
+        right: auto;
+
+        width: 100%;
+      }
+
+
+      .about-left {
+        transform: none;
+
+        animation:
+          mobileFadeUp
+          900ms
+          cubic-bezier(.22, 1, .36, 1)
+          120ms
+          forwards;
+      }
+
+
+      .about-right {
+        max-width: 430px;
+
+        align-self: flex-end;
+
+        animation:
+          mobileFadeDown
+          900ms
+          cubic-bezier(.22, 1, .36, 1)
+          220ms
+          forwards;
+      }
+
+
+      .about-location {
+        padding-left: 0;
+      }
+
+
+      .about-description {
+        line-height: 1.65;
+      }
+
+
+      @keyframes mobileFadeUp {
+
+        from {
+          opacity: 0;
+
+          transform:
+            translateY(35px);
+        }
+
+
+        to {
+          opacity: 1;
+
+          transform:
+            translateY(0);
+        }
+
+      }
+
+
+      @keyframes mobileFadeDown {
+
+        from {
+          opacity: 0;
+
+          transform:
+            translateY(-35px);
+        }
+
+
+        to {
+          opacity: 1;
+
+          transform:
+            translateY(0);
+        }
+
+      }
+
+    }
+
+
+
+    /* ========================================
+       SMALL MOBILE
+       ======================================== */
+
+    @media (max-width: 480px) {
+
+      .site-header__inner {
+        gap: 8px;
+      }
+
+
+      .nav-link {
+        letter-spacing:
+          -0.04em;
+      }
+
+
+      .about-name {
+        font-size:
+          clamp(
+            20px,
+            6vw,
+            24px
+          );
+      }
+
+
+      .about-description {
+        font-size: 16px;
+      }
+
+    }
+
+
+
+    /* ========================================
+       REDUCED MOTION
+       ======================================== */
+
+    @media (
+      prefers-reduced-motion: reduce
+    ) {
+
+      .about-left,
+      .about-right {
+        opacity: 1;
+
+        animation: none;
+
+        transform: none;
+      }
+
+
+      .nav-link::before {
+        transition: none;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- ========================================
+       VIDEO BACKGROUND
+       ======================================== -->
+
+  <div class="about-background">
+
+    <video
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+    >
+
+      <source
+        src="assets/spec2.webm"
+        type="video/webm"
+      >
+
+    </video>
+
+  </div>
+
+
+
+  <!-- ========================================
+       HEADER
+       ======================================== -->
+
+  <header class="site-header">
+
+    <div class="site-header__inner">
+
+
+      <!-- LOGO -->
+
+      <a
+        class="brand"
+        href="index.html"
+        aria-label="Home"
+      >
+
+        <img
+          id="logoImage"
+          src="assets/logo.svg"
+          alt="Logo"
+        >
+
+      </a>
+
+
+
+      <!-- HOME -->
+
+      <a
+        class="nav-link"
+        href="index.html"
+      >
+
+        <span>
+          Home
+        </span>
+
+      </a>
+
+
+
+      <!-- ABOUT ME ACTIVE -->
+
+      <a
+        class="nav-link active"
+        href="aboutme.html"
+        aria-current="page"
+      >
+
+        <span>
+          About me
+        </span>
+
+      </a>
+
+
+
+      <!-- PROJECTS -->
+
+      <a
+        class="nav-link"
+        href="projects.html"
+      >
+
+        <span>
+          Projects
+        </span>
+
+      </a>
+
+
+
+      <!-- CONTACTS -->
+
+      <a
+        class="nav-link"
+        href="contacts.html"
+      >
+
+        <span>
+          Contacts
+        </span>
+
+      </a>
+
+
+    </div>
+
+  </header>
+
+
+
+  <!-- ========================================
+       ABOUT CONTENT
+       ======================================== -->
+
+  <main class="about-content">
+
+
+    <!-- ======================================
+         LEFT
+         ====================================== -->
+
+    <section class="about-left">
+
+      <h1 class="about-name">
+        Nguyen Thi Xuan Hien
+      </h1>
+
+
+      <p class="about-location">
+        HCM, Vietnam Based
+      </p>
+
+    </section>
+
+
+
+    <!-- ======================================
+         RIGHT
+         ====================================== -->
+
+    <section class="about-right">
+
+      <p class="about-description">
+        Creative Visual Designer with a core
+        passion for films, music videos, 2D
+        animation, and artistic productions.
+        Visual storytelling and the synergy
+        of motion, sound, and space are
+        where my true creative passion lies.
+      </p>
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- ========================================
+       JAVASCRIPT
+       ======================================== -->
+
+  <script>
+
+    (() => {
+
+
+      /* =====================================
+         LOGO LOOP
+         ===================================== */
+
+      const logoImage =
+        document.getElementById(
+          "logoImage"
+        );
+
+
+      const logos = [
+        "assets/logo.svg",
+        "assets/logo1.svg",
+        "assets/logo2.svg",
+        "assets/logo3.svg"
+      ];
+
+
+      let currentLogoIndex = 0;
+
+
+
+      /*
+        Preload toàn bộ logo
+        để đổi không bị flash.
+      */
+
+      logos.forEach(
+        src => {
+
+          const image =
+            new Image();
+
+
+          image.src =
+            src;
+
+        }
+      );
+
+
+
+      /*
+        Đổi logo mỗi 2 giây.
+      */
+
+      window.setInterval(
+        () => {
+
+          currentLogoIndex =
+            (
+              currentLogoIndex + 1
+            )
+            %
+            logos.length;
+
+
+          logoImage.src =
+            logos[
+              currentLogoIndex
+            ];
+
+        },
+        2000
+      );
+
+
+    })();
+
+  </script>
+<a
+  class="watch-full-corner"
+  href="YOUR-LINK-HERE"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  ■ Watch full
+</a>
+</body>
+
+</html>

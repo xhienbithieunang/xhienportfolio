@@ -1,0 +1,2411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<link
+  rel="icon"
+  type="image/svg+xml"
+  href="assets/logotab.svg"
+>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Xhien Portfolio</title>
+
+  <style>
+
+    :root {
+
+      --background: #000;
+      --white: #fff;
+
+      /* HEADER */
+
+      --header-x:
+        clamp(24px, 3.05vw, 44px);
+
+      --header-y:
+        clamp(18px, 2.05vw, 30px);
+
+
+      /* PROJECT INFO */
+
+      --project-left:
+        clamp(28px, 15.9vw, 230px);
+
+      --project-right:
+        clamp(28px, 3.05vw, 44px);
+
+      --project-middle:
+        45.5%;
+
+      --project-bottom:
+        clamp(30px, 4.3vh, 44px);
+
+
+      /* TYPOGRAPHY */
+
+      --font-size: 16px;
+
+
+      /* SHADOW */
+
+      --text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.8),
+        0 0 10px rgba(0, 0, 0, 0.35);
+
+
+      /* SLIDER */
+
+      --slide-duration:
+        1100ms;
+
+    }
+
+
+    /* ========================================
+       RESET
+       ======================================== */
+
+    * {
+
+      box-sizing: border-box;
+
+      margin: 0;
+
+      padding: 0;
+
+    }
+
+
+    html,
+    body {
+
+      width: 100%;
+      height: 100%;
+
+      overflow: hidden;
+
+      background:
+        var(--background);
+
+      color:
+        var(--white);
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      -webkit-font-smoothing:
+        antialiased;
+
+      text-rendering:
+        optimizeLegibility;
+
+    }
+
+
+    body {
+
+      position: relative;
+
+    }
+
+
+    a {
+
+      color: inherit;
+
+    }
+
+
+
+    /* ========================================
+       SHOWREEL
+       ======================================== */
+
+    .showreel {
+
+      position: fixed;
+
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      overflow: hidden;
+
+      background: #000;
+
+    }
+
+
+
+    /* ========================================
+       TRACK
+       ======================================== */
+
+    .showreel-track {
+
+      position: absolute;
+
+      top: 0;
+      left: 0;
+
+      width: 100%;
+
+      transform:
+        translate3d(
+          0,
+          0,
+          0
+        );
+
+      transition:
+        transform
+        var(--slide-duration)
+        cubic-bezier(
+          .76,
+          0,
+          .24,
+          1
+        );
+
+      will-change:
+        transform;
+
+    }
+
+
+    .showreel-track.no-transition {
+
+      transition:
+        none !important;
+
+    }
+
+
+
+    /* ========================================
+       SLIDES
+       ======================================== */
+
+    .slide {
+
+      position: relative;
+
+      width: 100%;
+
+      height: 100vh;
+      height: 100svh;
+
+      overflow: hidden;
+
+      background: #000;
+
+      cursor: pointer;
+
+    }
+
+
+
+    /* ========================================
+       VIDEO
+       ======================================== */
+
+    .slide video {
+
+      position: absolute;
+
+      inset: 0;
+
+      display: block;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      object-position: center;
+
+      background: #000;
+
+      pointer-events: none;
+
+      transform:
+        translateZ(0);
+
+    }
+
+
+
+    /* ========================================
+       PROJECT TEXT
+       ======================================== */
+
+    .project-meta {
+
+      position: absolute;
+
+      inset: 0;
+
+      z-index: 10;
+
+      pointer-events: none;
+
+    }
+
+
+    .project-meta__name,
+    .project-meta__year,
+    .project-meta__category {
+
+      position: absolute;
+
+      color: #fff;
+
+      font-size: 16px;
+
+      font-weight: 600;
+
+      line-height: 1;
+
+      letter-spacing:
+        -0.02em;
+
+      text-shadow:
+        var(--text-shadow);
+
+    }
+
+
+
+    /* PROJECT NAME */
+
+    .project-meta__name {
+
+      left:
+        var(--project-left);
+
+      top:
+        var(--project-middle);
+
+      transform:
+        translateY(-50%);
+
+      text-transform:
+        uppercase;
+
+    }
+
+
+
+    /* YEAR */
+
+    .project-meta__year {
+
+      right:
+        var(--project-right);
+
+      top:
+        var(--project-middle);
+
+      transform:
+        translateY(-50%);
+
+    }
+
+
+
+    /* CATEGORY */
+
+    .project-meta__category {
+
+      left:
+        var(--project-left);
+
+      bottom:
+        var(--project-bottom);
+
+    }
+
+
+
+    /* ========================================
+       WATCH CURSOR
+       ======================================== */
+
+    .watch-label {
+
+      position: fixed;
+
+      left: 0;
+      top: 0;
+
+      z-index: 200;
+
+      color: #fff;
+
+      font-size: 16px;
+
+      font-weight: 400;
+
+      line-height: 1;
+
+      white-space: nowrap;
+
+      pointer-events: none;
+
+      text-shadow:
+        var(--text-shadow);
+
+      /*
+        Sang phải 24px
+        Xuống dưới 30px
+      */
+
+      transform:
+        translate(
+          24px,
+          30px
+        );
+
+      opacity: 0;
+
+      visibility: hidden;
+
+      transition:
+        opacity 120ms ease,
+        visibility 120ms ease;
+
+    }
+
+
+    .watch-label.is-visible {
+
+      opacity: 1;
+
+      visibility: visible;
+
+    }
+
+
+
+    /* ========================================
+       HEADER
+       ======================================== */
+
+    .site-header {
+
+      position: fixed;
+
+      top: 0;
+      left: 0;
+      right: 0;
+
+      z-index: 300;
+
+      padding:
+        var(--header-y)
+        var(--header-x)
+        0;
+
+      pointer-events: none;
+
+      background:
+        transparent;
+
+    }
+
+
+    .site-header__inner {
+
+      width: 100%;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(5, 1fr);
+
+      align-items: start;
+
+      pointer-events: auto;
+
+    }
+
+
+
+    /* ========================================
+       LOGO
+       ======================================== */
+
+    .brand {
+
+      justify-self: start;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      height: 24px;
+
+    }
+
+
+    .brand img {
+
+      display: block;
+
+      width: auto;
+
+      height:
+        clamp(
+          18px,
+          1.7vw,
+          24px
+        );
+
+      filter:
+        drop-shadow(
+          0 1px 3px
+          rgba(0, 0, 0, 0.65)
+        );
+
+    }
+
+
+
+    /* ========================================
+       NAVIGATION
+       ======================================== */
+
+    .nav-link {
+
+      position: relative;
+
+      justify-self: center;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      /*
+        Cho box có một chút khoảng
+        trắng quanh chữ.
+      */
+
+      padding:
+        1px 2px;
+
+      text-decoration: none;
+
+      font-size: 16px;
+
+      font-weight: 400;
+
+      line-height: 1;
+
+      white-space: nowrap;
+
+      overflow: hidden;
+
+    }
+
+
+
+    /* ========================================
+       NAV WHITE BOX
+       ======================================== */
+
+    .nav-link::before {
+
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      z-index: 1;
+
+      background: #fff;
+
+      /*
+        Bình thường box bị thu lại
+        về mép bên phải.
+      */
+
+      transform:
+        scaleX(0);
+
+      transform-origin:
+        right center;
+
+      transition:
+        transform
+        350ms
+        cubic-bezier(
+          .76,
+          0,
+          .24,
+          1
+        );
+
+    }
+
+
+
+    /*
+      Khi hover:
+
+      box bắt đầu từ mép trái
+      rồi chạy sang phải.
+    */
+
+    .nav-link:not(.active):hover::before {
+
+      transform:
+        scaleX(1);
+
+      transform-origin:
+        left center;
+
+    }
+
+
+
+    /* ========================================
+       NAV TEXT
+       ======================================== */
+
+    .nav-link > span {
+
+      position: relative;
+
+      z-index: 2;
+
+      display: block;
+
+      color: #fff;
+
+      font-size: 16px;
+
+      text-shadow:
+        var(--text-shadow);
+
+      transition:
+        color 140ms ease,
+        text-shadow 140ms ease;
+
+    }
+
+
+
+    /*
+      Hover:
+
+      text thành đen
+      và bỏ shadow.
+    */
+
+    .nav-link:not(.active):hover > span {
+
+      color: #000;
+
+      text-shadow: none;
+
+    }
+
+
+
+    /* ========================================
+       HOME ACTIVE
+       ======================================== */
+
+    /*
+      Home luôn có box trắng.
+    */
+
+    .nav-link.active::before {
+
+      transform:
+        scaleX(1);
+
+      transform-origin:
+        left center;
+
+      transition: none;
+
+    }
+
+
+    .nav-link.active > span {
+
+      color: #000;
+
+      text-shadow: none;
+
+    }
+
+
+
+    /* ========================================
+       TABLET
+       ======================================== */
+
+    @media (max-width: 900px) {
+
+      :root {
+
+        --project-left:
+          24px;
+
+        --project-right:
+          24px;
+
+      }
+
+
+      .site-header {
+
+        padding-left:
+          24px;
+
+        padding-right:
+          24px;
+
+      }
+
+
+      .site-header__inner {
+
+        grid-template-columns:
+          auto
+          1fr
+          1fr
+          1fr
+          1fr;
+
+        column-gap:
+          18px;
+
+      }
+
+    }
+
+
+
+    /* ========================================
+       MOBILE
+       ======================================== */
+
+    @media (max-width: 640px) {
+
+      :root {
+
+        --header-x:
+          20px;
+
+        --project-left:
+          20px;
+
+        --project-right:
+          20px;
+
+        --project-middle:
+          48%;
+
+        --project-bottom:
+          24px;
+
+      }
+
+
+      .site-header {
+
+        padding-top:
+          20px;
+
+      }
+
+
+      .site-header__inner {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content:
+          space-between;
+
+        gap: 14px;
+
+      }
+
+
+      .brand {
+
+        margin-right: auto;
+
+      }
+
+
+      .nav-link,
+      .nav-link > span,
+      .project-meta__name,
+      .project-meta__year,
+      .project-meta__category {
+
+        font-size: 16px;
+
+      }
+
+
+      /*
+        Mobile không có mouse hover.
+      */
+
+      .watch-label {
+
+        display: none;
+
+      }
+
+    }
+
+
+
+    @media (max-width: 480px) {
+
+      .site-header__inner {
+
+        gap: 9px;
+
+      }
+
+
+      .nav-link {
+
+        letter-spacing:
+          -0.04em;
+
+      }
+
+    }
+
+
+
+    /* ========================================
+       REDUCED MOTION
+       ======================================== */
+
+    @media (
+      prefers-reduced-motion: reduce
+    ) {
+
+      .showreel-track {
+
+        transition:
+          none !important;
+
+      }
+
+
+      .nav-link::before {
+
+        transition:
+          none;
+
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- ========================================
+       SHOWREEL
+       ======================================== -->
+
+  <main
+    class="showreel"
+    id="showreel"
+    aria-label="Showreel"
+  >
+
+    <div
+      class="showreel-track"
+      id="showreelTrack"
+    >
+
+
+      <!-- PROJECT 01 -->
+
+      <section
+        class="slide"
+        data-url="project-toteti.html"
+      >
+
+        <video
+          muted
+          playsinline
+          loop
+          preload="auto"
+        >
+
+          <source
+            src="assets/spec2.webm"
+            type="video/webm"
+          >
+
+        </video>
+
+
+        <div class="project-meta">
+
+          <div
+            class="project-meta__name"
+          >
+            Tò Te Tí
+          </div>
+
+
+          <div
+            class="project-meta__year"
+          >
+            2026
+          </div>
+
+
+          <div
+            class="project-meta__category"
+          >
+            Music Video
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- PROJECT 02 -->
+
+      <section
+        class="slide"
+        data-url="project-daddyhere.html"
+      >
+
+        <video
+          muted
+          playsinline
+          loop
+          preload="metadata"
+        >
+
+          <source
+            src="assets/spec2.webm"
+            type="video/webm"
+          >
+
+        </video>
+
+
+        <div class="project-meta">
+
+          <div
+            class="project-meta__name"
+          >
+            Daddy's Here
+          </div>
+
+
+          <div
+            class="project-meta__year"
+          >
+            2026
+          </div>
+
+
+          <div
+            class="project-meta__category"
+          >
+            Stop Motion Short Film
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- PROJECT 03 -->
+
+      <section
+        class="slide"
+        data-url="project-constipation.html"
+      >
+
+        <video
+          muted
+          playsinline
+          loop
+          preload="metadata"
+        >
+
+          <source
+            src="assets/2D a3.webm"
+            type="video/webm"
+          >
+
+        </video>
+
+
+        <div class="project-meta">
+
+          <div
+            class="project-meta__name"
+          >
+            When Constipation Became the Ultimate Villain and I Had to Awaken My Excretory Haki
+          </div>
+
+
+          <div
+            class="project-meta__year"
+          >
+            2025
+          </div>
+
+
+          <div
+            class="project-meta__category"
+          >
+            2D Animation Short Film
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- PROJECT 04 -->
+
+      <section
+        class="slide"
+        data-url="project-mouthpiece.html"
+      >
+
+        <video
+          muted
+          playsinline
+          loop
+          preload="metadata"
+        >
+
+          <source
+            src="assets/2D a1.webm"
+            type="video/webm"
+          >
+
+        </video>
+
+
+        <div class="project-meta">
+
+          <div
+            class="project-meta__name"
+          >
+            Mouthpiece
+          </div>
+
+
+          <div
+            class="project-meta__year"
+          >
+            2025
+          </div>
+
+
+          <div
+            class="project-meta__category"
+          >
+            2D Morphing Animation
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- PROJECT 05 -->
+
+      <section
+        class="slide"
+        data-url="project-dv.html"
+      >
+
+        <video
+          muted
+          playsinline
+          loop
+          preload="metadata"
+        >
+
+          <source
+            src="assets/dv.webm"
+            type="video/webm"
+          >
+
+        </video>
+
+
+        <div class="project-meta">
+
+          <div
+            class="project-meta__name"
+          >
+            Untitled
+          </div>
+
+
+          <div
+            class="project-meta__year"
+          >
+            2023
+          </div>
+
+
+          <div
+            class="project-meta__category"
+          >
+            Graphic Motion
+          </div>
+
+        </div>
+
+      </section>
+<!-- PROJECT 06 -->
+
+<section
+  class="slide"
+  data-url="project-sentinel.html"
+>
+
+  <video
+    muted
+    playsinline
+    loop
+    preload="metadata"
+  >
+
+    <source
+      src="assets/sentinel.webm"
+      type="video/webm"
+    >
+
+  </video>
+
+
+  <div class="project-meta">
+
+    <div
+      class="project-meta__name"
+    >
+      Sentinel: Plague Control
+    </div>
+
+
+    <div
+      class="project-meta__year"
+    >
+      2025
+    </div>
+
+
+    <div
+      class="project-meta__category"
+    >
+      Game Trailer
+    </div>
+
+  </div>
+
+</section>
+
+    </div>
+
+  </main>
+
+
+
+  <!-- ========================================
+       WATCH
+       ======================================== -->
+
+  <div
+    class="watch-label"
+    id="watchLabel"
+  >
+    Watch
+  </div>
+
+
+
+  <!-- ========================================
+       HEADER
+       ======================================== -->
+
+  <header
+    class="site-header"
+  >
+
+    <div
+      class="site-header__inner"
+      id="headerInner"
+    >
+
+
+      <!-- LOGO -->
+
+      <a
+        class="brand"
+        href="index.html"
+        aria-label="Home"
+      >
+
+        <img
+          id="logoImage"
+          src="assets/logo.svg"
+          alt="Logo"
+        >
+
+      </a>
+
+
+
+      <!-- HOME -->
+
+      <a
+        class="nav-link active"
+        href="index.html"
+        aria-current="page"
+      >
+
+        <span>
+          Home
+        </span>
+
+      </a>
+
+
+
+      <!-- ABOUT -->
+
+      <a
+        class="nav-link"
+        href="aboutme.html"
+      >
+
+        <span>
+          About me
+        </span>
+
+      </a>
+
+
+
+      <!-- PROJECTS -->
+
+      <a
+        class="nav-link"
+        href="projects.html"
+      >
+
+        <span>
+          Projects
+        </span>
+
+      </a>
+
+
+
+      <!-- CONTACT -->
+
+      <a
+        class="nav-link"
+        href="contacts.html"
+      >
+
+        <span>
+          Contacts
+        </span>
+
+      </a>
+
+
+    </div>
+
+  </header>
+
+
+
+  <script>
+
+    (() => {
+
+
+      /* =====================================
+         DOM
+         ===================================== */
+
+      const track =
+        document.getElementById(
+          "showreelTrack"
+        );
+
+
+      const showreel =
+        document.getElementById(
+          "showreel"
+        );
+
+
+      const watchLabel =
+        document.getElementById(
+          "watchLabel"
+        );
+
+
+      const headerInner =
+        document.getElementById(
+          "headerInner"
+        );
+
+
+      const logoImage =
+        document.getElementById(
+          "logoImage"
+        );
+
+
+      const realSlides =
+        Array.from(
+          track.querySelectorAll(
+            ".slide"
+          )
+        );
+
+
+      const slideCount =
+        realSlides.length;
+
+
+
+      /* =====================================
+         LOGO LOOP
+         ===================================== */
+
+      const logos = [
+
+        "assets/logo.svg",
+
+        "assets/logo1.svg",
+
+        "assets/logo2.svg",
+
+        "assets/logo3.svg"
+
+      ];
+
+
+      let currentLogoIndex = 0;
+
+
+
+      /*
+        Preload logo
+      */
+
+      logos.forEach(
+        src => {
+
+          const img =
+            new Image();
+
+
+          img.src =
+            src;
+
+        }
+      );
+
+
+
+      /*
+        Đổi logo mỗi 2 giây.
+      */
+
+      window.setInterval(
+        () => {
+
+          currentLogoIndex =
+            (
+              currentLogoIndex + 1
+            )
+            %
+            logos.length;
+
+
+          logoImage.src =
+            logos[
+              currentLogoIndex
+            ];
+
+        },
+        2000
+      );
+
+
+
+      /* =====================================
+         INFINITE SLIDER
+         ===================================== */
+
+      const firstClone =
+        realSlides[0]
+          .cloneNode(true);
+
+
+      firstClone.classList.add(
+        "slide-clone"
+      );
+
+
+      firstClone.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+
+      track.appendChild(
+        firstClone
+      );
+
+
+      const allSlides =
+        Array.from(
+          track.querySelectorAll(
+            ".slide"
+          )
+        );
+
+
+      const videos =
+        allSlides.map(
+          slide =>
+            slide.querySelector(
+              "video"
+            )
+        );
+
+
+
+      /* =====================================
+         SETTINGS
+         ===================================== */
+
+      let currentIndex = 0;
+
+      let isAnimating = false;
+
+      let autoplayTimer = null;
+
+      let wheelLocked = false;
+
+      let touchStartY = 0;
+
+
+      const AUTOPLAY_DELAY =
+        7000;
+
+
+      const TRANSITION_DURATION =
+        1100;
+
+
+
+      /* =====================================
+         WATCH CURSOR
+
+         FIX:
+         Không phụ thuộc mouseenter
+         của từng slide nữa.
+         ===================================== */
+
+      function updateWatch(
+        event
+      ) {
+
+        /*
+          Update position.
+        */
+
+        watchLabel.style.left =
+          `${event.clientX}px`;
+
+
+        watchLabel.style.top =
+          `${event.clientY}px`;
+
+
+
+        /*
+          Kiểm tra element thật
+          đang nằm dưới cursor.
+        */
+
+        const elementUnderCursor =
+          document.elementFromPoint(
+            event.clientX,
+            event.clientY
+          );
+
+
+        if (
+          !elementUnderCursor
+        ) {
+
+          hideWatch();
+
+          return;
+
+        }
+
+
+
+        /*
+          Nếu đang hover header:
+          không hiện Watch.
+        */
+
+        const overHeader =
+          elementUnderCursor.closest(
+            ".site-header__inner"
+          );
+
+
+        if (overHeader) {
+
+          hideWatch();
+
+          return;
+
+        }
+
+
+
+        /*
+          Nếu cursor đang nằm
+          trên project/showreel.
+        */
+
+        const overSlide =
+          elementUnderCursor.closest(
+            ".slide"
+          );
+
+
+        if (overSlide) {
+
+          showWatch();
+
+        }
+
+        else {
+
+          hideWatch();
+
+        }
+
+      }
+
+
+
+      function showWatch() {
+
+        watchLabel.classList.add(
+          "is-visible"
+        );
+
+      }
+
+
+
+      function hideWatch() {
+
+        watchLabel.classList.remove(
+          "is-visible"
+        );
+
+      }
+
+
+
+      /*
+        Theo dõi cursor toàn trang.
+
+        Nhờ cách này dù slide 1 → 2
+        → 3 → 4 → 5 chạy bên dưới
+        cursor thì Watch vẫn tồn tại.
+      */
+
+      document.addEventListener(
+        "mousemove",
+        updateWatch
+      );
+
+
+
+      /*
+        Cursor ra khỏi browser window.
+      */
+
+      document.addEventListener(
+        "mouseleave",
+        hideWatch
+      );
+
+
+
+      /*
+        Header chủ động hide Watch.
+      */
+
+      headerInner.addEventListener(
+        "mouseenter",
+        hideWatch
+      );
+
+
+
+      /* =====================================
+         CLICK PROJECT
+         ===================================== */
+
+      allSlides.forEach(
+        slide => {
+
+          slide.addEventListener(
+            "click",
+            event => {
+
+
+              if (
+                isAnimating
+              ) {
+
+                return;
+
+              }
+
+
+              const url =
+                slide.dataset.url;
+
+
+              if (!url) {
+
+                return;
+
+              }
+
+
+              window.location.href =
+                url;
+
+            }
+          );
+
+        }
+      );
+
+
+
+      /* =====================================
+         DIMENSIONS
+         ===================================== */
+
+      function slideHeight() {
+
+        return (
+          realSlides[0]
+            .getBoundingClientRect()
+            .height
+        );
+
+      }
+
+
+
+      function slidePosition(
+        index
+      ) {
+
+        return (
+          index *
+          slideHeight()
+        );
+
+      }
+
+
+
+      /* =====================================
+         TRACK
+         ===================================== */
+
+      function setTrackPosition(
+        index
+      ) {
+
+        track.style.transform =
+          `translate3d(
+            0,
+            -${slidePosition(index)}px,
+            0
+          )`;
+
+      }
+
+
+
+      /* =====================================
+         VIDEO CONTROL
+         ===================================== */
+
+      function playVideo(
+        video
+      ) {
+
+        if (!video) {
+
+          return;
+
+        }
+
+
+        const promise =
+          video.play();
+
+
+        if (
+          promise &&
+          typeof promise.catch
+            === "function"
+        ) {
+
+          promise.catch(
+            () => {}
+          );
+
+        }
+
+      }
+
+
+
+      function playCurrentVideo() {
+
+        videos.forEach(
+          (
+            video,
+            index
+          ) => {
+
+            if (!video) {
+
+              return;
+
+            }
+
+
+            if (
+              index ===
+              currentIndex
+            ) {
+
+              playVideo(
+                video
+              );
+
+            }
+
+            else {
+
+              video.pause();
+
+            }
+
+          }
+        );
+
+      }
+
+
+
+      function playTransitionVideos(
+        fromIndex,
+        toIndex
+      ) {
+
+        videos.forEach(
+          (
+            video,
+            index
+          ) => {
+
+            if (!video) {
+
+              return;
+
+            }
+
+
+            if (
+              index === fromIndex ||
+              index === toIndex
+            ) {
+
+              playVideo(
+                video
+              );
+
+            }
+
+            else {
+
+              video.pause();
+
+            }
+
+          }
+        );
+
+      }
+
+
+
+      /* =====================================
+         AUTOPLAY
+         ===================================== */
+
+      function stopAutoplay() {
+
+        window.clearTimeout(
+          autoplayTimer
+        );
+
+      }
+
+
+
+      function startAutoplay() {
+
+        stopAutoplay();
+
+
+        autoplayTimer =
+          window.setTimeout(
+            () => {
+
+              goNext();
+
+            },
+            AUTOPLAY_DELAY
+          );
+
+      }
+
+
+
+      /* =====================================
+         NEXT
+         ===================================== */
+
+      function goNext() {
+
+        if (
+          isAnimating
+        ) {
+
+          return;
+
+        }
+
+
+        isAnimating =
+          true;
+
+
+        stopAutoplay();
+
+
+        const previousIndex =
+          currentIndex;
+
+
+        currentIndex += 1;
+
+
+        playTransitionVideos(
+          previousIndex,
+          currentIndex
+        );
+
+
+        track.classList.remove(
+          "no-transition"
+        );
+
+
+        requestAnimationFrame(
+          () => {
+
+            setTrackPosition(
+              currentIndex
+            );
+
+          }
+        );
+
+
+        window.setTimeout(
+          () => {
+
+
+            /*
+              PROJECT 05
+              ↓
+              PROJECT 01 CLONE
+            */
+
+            if (
+              currentIndex ===
+              slideCount
+            ) {
+
+              const cloneVideo =
+                videos[
+                  slideCount
+                ];
+
+
+              const firstVideo =
+                videos[0];
+
+
+              if (
+                cloneVideo &&
+                firstVideo
+              ) {
+
+                try {
+
+                  firstVideo.currentTime =
+                    cloneVideo.currentTime;
+
+                }
+
+                catch (
+                  error
+                ) {}
+
+              }
+
+
+              track.classList.add(
+                "no-transition"
+              );
+
+
+              currentIndex =
+                0;
+
+
+              setTrackPosition(
+                0
+              );
+
+
+              void track.offsetHeight;
+
+
+              track.classList.remove(
+                "no-transition"
+              );
+
+            }
+
+
+            playCurrentVideo();
+
+
+            isAnimating =
+              false;
+
+
+            startAutoplay();
+
+          },
+          TRANSITION_DURATION
+          + 30
+        );
+
+      }
+
+
+
+      /* =====================================
+         PREVIOUS
+         ===================================== */
+
+      function goPrevious() {
+
+        if (
+          isAnimating
+        ) {
+
+          return;
+
+        }
+
+
+        isAnimating =
+          true;
+
+
+        stopAutoplay();
+
+
+
+        if (
+          currentIndex === 0
+        ) {
+
+          const firstVideo =
+            videos[0];
+
+
+          const cloneVideo =
+            videos[
+              slideCount
+            ];
+
+
+          if (
+            firstVideo &&
+            cloneVideo
+          ) {
+
+            try {
+
+              cloneVideo.currentTime =
+                firstVideo.currentTime;
+
+            }
+
+            catch (
+              error
+            ) {}
+
+          }
+
+
+          track.classList.add(
+            "no-transition"
+          );
+
+
+          currentIndex =
+            slideCount;
+
+
+          setTrackPosition(
+            currentIndex
+          );
+
+
+          void track.offsetHeight;
+
+
+          track.classList.remove(
+            "no-transition"
+          );
+
+        }
+
+
+
+        const previousIndex =
+          currentIndex;
+
+
+        currentIndex -= 1;
+
+
+        playTransitionVideos(
+          previousIndex,
+          currentIndex
+        );
+
+
+        requestAnimationFrame(
+          () => {
+
+            setTrackPosition(
+              currentIndex
+            );
+
+          }
+        );
+
+
+        window.setTimeout(
+          () => {
+
+            playCurrentVideo();
+
+
+            isAnimating =
+              false;
+
+
+            startAutoplay();
+
+          },
+          TRANSITION_DURATION
+          + 30
+        );
+
+      }
+
+
+
+      /* =====================================
+         WHEEL
+         ===================================== */
+
+      window.addEventListener(
+        "wheel",
+        event => {
+
+          event.preventDefault();
+
+
+          if (
+            wheelLocked
+          ) {
+
+            return;
+
+          }
+
+
+          if (
+            Math.abs(
+              event.deltaY
+            )
+            <
+            20
+          ) {
+
+            return;
+
+          }
+
+
+          wheelLocked =
+            true;
+
+
+          if (
+            event.deltaY > 0
+          ) {
+
+            goNext();
+
+          }
+
+          else {
+
+            goPrevious();
+
+          }
+
+
+          window.setTimeout(
+            () => {
+
+              wheelLocked =
+                false;
+
+            },
+            TRANSITION_DURATION
+          );
+
+        },
+        {
+          passive:
+            false
+        }
+      );
+
+
+
+      /* =====================================
+         KEYBOARD
+         ===================================== */
+
+      window.addEventListener(
+        "keydown",
+        event => {
+
+          if (
+            event.key ===
+              "ArrowDown"
+            ||
+            event.key ===
+              "PageDown"
+          ) {
+
+            goNext();
+
+          }
+
+
+          if (
+            event.key ===
+              "ArrowUp"
+            ||
+            event.key ===
+              "PageUp"
+          ) {
+
+            goPrevious();
+
+          }
+
+        }
+      );
+
+
+
+      /* =====================================
+         TOUCH
+         ===================================== */
+
+      window.addEventListener(
+        "touchstart",
+        event => {
+
+          touchStartY =
+            event
+              .touches[0]
+              .clientY;
+
+        },
+        {
+          passive: true
+        }
+      );
+
+
+      window.addEventListener(
+        "touchend",
+        event => {
+
+          const touchEndY =
+            event
+              .changedTouches[0]
+              .clientY;
+
+
+          const distance =
+            touchStartY -
+            touchEndY;
+
+
+          if (
+            Math.abs(
+              distance
+            )
+            <
+            50
+          ) {
+
+            return;
+
+          }
+
+
+          if (
+            distance > 0
+          ) {
+
+            goNext();
+
+          }
+
+          else {
+
+            goPrevious();
+
+          }
+
+        },
+        {
+          passive: true
+        }
+      );
+
+
+
+      /* =====================================
+         RESIZE
+         ===================================== */
+
+      let resizeTimer =
+        null;
+
+
+      window.addEventListener(
+        "resize",
+        () => {
+
+          window.clearTimeout(
+            resizeTimer
+          );
+
+
+          resizeTimer =
+            window.setTimeout(
+              () => {
+
+                track.classList.add(
+                  "no-transition"
+                );
+
+
+                setTrackPosition(
+                  currentIndex
+                );
+
+
+                void track.offsetHeight;
+
+
+                track.classList.remove(
+                  "no-transition"
+                );
+
+              },
+              100
+            );
+
+        }
+      );
+
+
+
+      /* =====================================
+         VISIBILITY
+         ===================================== */
+
+      document.addEventListener(
+        "visibilitychange",
+        () => {
+
+          if (
+            document.hidden
+          ) {
+
+            stopAutoplay();
+
+            hideWatch();
+
+
+            videos.forEach(
+              video => {
+
+                if (
+                  video
+                ) {
+
+                  video.pause();
+
+                }
+
+              }
+            );
+
+          }
+
+          else {
+
+            playCurrentVideo();
+
+            startAutoplay();
+
+          }
+
+        }
+      );
+
+
+
+      /* =====================================
+         INIT
+         ===================================== */
+
+      track.classList.add(
+        "no-transition"
+      );
+
+
+      setTrackPosition(
+        0
+      );
+
+
+      void track.offsetHeight;
+
+
+      track.classList.remove(
+        "no-transition"
+      );
+
+
+      playCurrentVideo();
+
+
+      startAutoplay();
+
+
+    })();
+
+  </script>
+
+</body>
+
+</html>
