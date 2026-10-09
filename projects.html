@@ -3,11 +3,13 @@
 
 <head>
   <meta charset="UTF-8">
-<link
-  rel="icon"
-  type="image/svg+xml"
-  href="assets/logotab.svg"
->
+
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="assets/logotab.svg"
+  >
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
@@ -20,14 +22,11 @@
       --bg: #000;
       --white: #fff;
 
-      /* Header */
       --page-x: clamp(20px, 3.05vw, 44px);
       --header-y: clamp(18px, 2vw, 28px);
 
-      /* Text */
       --font-size: 14px;
 
-      /* Shadow giống các page trước */
       --text-shadow:
         0 1px 3px rgba(0, 0, 0, 0.8),
         0 0 10px rgba(0, 0, 0, 0.35);
@@ -76,6 +75,23 @@
 
 
     /* ========================================
+       HIDE SCROLLBAR
+       ======================================== */
+
+    html,
+    body {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+      display: none;
+    }
+
+
+    /* ========================================
        HEADER
        ======================================== */
 
@@ -101,7 +117,6 @@
       width: 100%;
 
       display: grid;
-
       grid-template-columns:
         repeat(5, 1fr);
 
@@ -139,7 +154,8 @@
 
       filter:
         drop-shadow(
-          0 1px 3px rgba(0, 0, 0, 0.65)
+          0 1px 3px
+          rgba(0, 0, 0, 0.65)
         );
     }
 
@@ -171,16 +187,10 @@
     }
 
 
-    /*
-      Box trắng.
-      Bình thường thu về bên phải.
-    */
-
     .nav-link::before {
       content: "";
 
       position: absolute;
-
       inset: 0;
 
       z-index: 1;
@@ -188,9 +198,7 @@
       background: #fff;
 
       transform: scaleX(0);
-
-      transform-origin:
-        right center;
+      transform-origin: right center;
 
       transition:
         transform
@@ -199,16 +207,9 @@
     }
 
 
-    /*
-      Hover:
-      box chạy từ trái sang phải.
-    */
-
     .nav-link:not(.active):hover::before {
       transform: scaleX(1);
-
-      transform-origin:
-        left center;
+      transform-origin: left center;
     }
 
 
@@ -232,7 +233,6 @@
 
     .nav-link:not(.active):hover span {
       color: #000;
-
       text-shadow: none;
     }
 
@@ -243,9 +243,7 @@
 
     .nav-link.active::before {
       transform: scaleX(1);
-
-      transform-origin:
-        left center;
+      transform-origin: left center;
 
       transition: none;
     }
@@ -253,15 +251,12 @@
 
     .nav-link.active span {
       color: #000;
-
       text-shadow: none;
     }
 
 
     /* ========================================
-       EMPTY TOP AREA
-
-       Khoảng đen phía trên giống mockup.
+       TOP EMPTY SPACE
        ======================================== */
 
     .projects-intro {
@@ -280,16 +275,6 @@
 
     /* ========================================
        PROJECT GRID
-
-       Dùng grid 6 columns:
-
-       01 = 3 columns
-       02 = 3 columns
-
-       03 = 2 columns
-       04 = 2 columns
-       05 = 2 columns
-       06 = centered 2 columns
        ======================================== */
 
     .projects-grid {
@@ -316,17 +301,11 @@
       background: #000;
 
       cursor: pointer;
-    }
 
-
-    /* ========================================
-       PROJECT LOAD ANIMATION
-       Fade + slide từ trái sang khi vào page
-       ======================================== */
-
-    .project-card {
       opacity: 0;
-      transform: translateX(-48px);
+
+      transform:
+        translateX(-48px);
 
       animation:
         projectFadeIn
@@ -335,25 +314,70 @@
         forwards;
     }
 
-    .project-card:nth-child(1) { animation-delay: 80ms; }
-    .project-card:nth-child(2) { animation-delay: 150ms; }
-    .project-card:nth-child(3) { animation-delay: 220ms; }
-    .project-card:nth-child(4) { animation-delay: 290ms; }
-    .project-card:nth-child(5) { animation-delay: 360ms; }
-    .project-card:nth-child(6) { animation-delay: 430ms; }
+
+    /* ========================================
+       LOAD ANIMATION DELAY
+       ======================================== */
+
+    .project-card:nth-child(1) {
+      animation-delay: 80ms;
+    }
+
+    .project-card:nth-child(2) {
+      animation-delay: 150ms;
+    }
+
+    .project-card:nth-child(3) {
+      animation-delay: 220ms;
+    }
+
+    .project-card:nth-child(4) {
+      animation-delay: 290ms;
+    }
+
+    .project-card:nth-child(5) {
+      animation-delay: 360ms;
+    }
+
+    .project-card:nth-child(6) {
+      animation-delay: 430ms;
+    }
+
+    .project-card:nth-child(7) {
+      animation-delay: 500ms;
+    }
+
+    .project-card:nth-child(8) {
+      animation-delay: 570ms;
+    }
+
+    .project-card:nth-child(9) {
+      animation-delay: 640ms;
+    }
+
 
     @keyframes projectFadeIn {
       from {
         opacity: 0;
-        transform: translateX(-48px);
+
+        transform:
+          translateX(-48px);
       }
 
       to {
         opacity: 1;
-        transform: translateX(0);
+
+        transform:
+          translateX(0);
       }
     }
 
+
+    /* ========================================
+       DESKTOP GRID SIZE
+       ======================================== */
+
+    /* Project 01 + 02 = 2 cột lớn */
 
     .project-card:nth-child(1),
     .project-card:nth-child(2) {
@@ -362,17 +386,40 @@
     }
 
 
+    /* Project 03 trở đi = 3 project / hàng */
+
     .project-card:nth-child(3),
     .project-card:nth-child(4),
-    .project-card:nth-child(5) {
+    .project-card:nth-child(5),
+    .project-card:nth-child(6),
+    .project-card:nth-child(7),
+    .project-card:nth-child(8),
+    .project-card:nth-child(9) {
       grid-column:
         span 2;
     }
-/* PROJECT 06 - căn bên trái hàng cuối */
-.project-card:nth-child(6) {
-  grid-column: 1 / span 2;
-}
-    
+
+
+    /*
+      06 bắt đầu hàng mới.
+      Hàng = 06 / 07 / 08
+    */
+
+    .project-card:nth-child(6) {
+      grid-column:
+        1 / span 2;
+    }
+
+
+    /*
+      09 bắt đầu hàng mới,
+      căn sát bên trái.
+    */
+
+    .project-card:nth-child(9) {
+      grid-column:
+        1 / span 2;
+    }
 
 
     /* ========================================
@@ -380,64 +427,61 @@
        ======================================== */
 
     .project-media {
-  position: relative;
+      position: relative;
 
-  width: 100%;
+      width: 100%;
 
-  overflow: hidden;
+      overflow: hidden;
 
-  background: #000;
-}
-
-
-    /*
-      Hai project đầu:
-      panel rộng hơn và thấp hơn.
-    */
-
-    .project-card:nth-child(1) .project-media,
-    .project-card:nth-child(2) .project-media {
-      aspect-ratio: 2.05 / 1;
+      background: #000;
     }
 
 
-    /*
-      Ba project dưới:
-      panel hẹp hơn một chút.
-    */
+    /* 01 + 02 */
+
+    .project-card:nth-child(1) .project-media,
+    .project-card:nth-child(2) .project-media {
+      aspect-ratio:
+        2.05 / 1;
+    }
+
+
+    /* 03 → 09 */
 
     .project-card:nth-child(3) .project-media,
     .project-card:nth-child(4) .project-media,
     .project-card:nth-child(5) .project-media,
-    .project-card:nth-child(6) .project-media {
-      aspect-ratio: 1.65 / 1;
+    .project-card:nth-child(6) .project-media,
+    .project-card:nth-child(7) .project-media,
+    .project-card:nth-child(8) .project-media,
+    .project-card:nth-child(9) .project-media {
+      aspect-ratio:
+        1.65 / 1;
     }
 
 
     .project-media video {
-  position: absolute;
+      position: absolute;
 
-  top: -1px;
-  left: -1px;
+      top: -1px;
+      left: -1px;
 
-  display: block;
+      display: block;
 
-  width: calc(100% + 2px);
-  height: calc(100% + 2px);
+      width:
+        calc(100% + 2px);
 
-  object-fit: cover;
-  object-position: center;
+      height:
+        calc(100% + 2px);
 
-  background: #000;
+      object-fit: cover;
+      object-position: center;
 
-  pointer-events: none;
-}
+      background: #000;
 
+      pointer-events: none;
+    }
 
-    /*
-      Overlay cực nhẹ.
-      Có thể bỏ nếu không cần.
-    */
 
     .project-media::after {
       content: "";
@@ -471,11 +515,6 @@
 
       width: 100%;
 
-      /*
-        Khoảng đen dưới mỗi video
-        giống design.
-      */
-
       min-height:
         clamp(
           180px,
@@ -493,6 +532,7 @@
       color: #fff;
 
       font-size: 14px;
+
       line-height: 1.45;
     }
 
@@ -537,34 +577,35 @@
 
 
     .project-category {
-  color: #fff;
+      color: #fff;
 
-  font-size: 14px;
+      font-size: 14px;
 
-  line-height: 1.45;
+      line-height: 1.45;
 
-  text-align: right;
+      text-align: right;
 
-  justify-self: end;
-}
+      justify-self: end;
+    }
 
 
     /* ========================================
-       HOVER
-
-       Video chỉ play bằng JS.
-       CSS chỉ thêm feedback rất nhẹ.
+       HOVER VIDEO
        ======================================== */
 
-    .project-card .project-media video {
+    .project-card
+    .project-media
+    video {
       transition:
-        transform 600ms
+        transform
+        600ms
         cubic-bezier(.22, 1, .36, 1);
     }
 
 
     .project-card:hover
-    .project-media video {
+    .project-media
+    video {
       transform:
         scale(1.005);
     }
@@ -595,7 +636,7 @@
 
 
       /*
-        Tablet chuyển thành 2 cột.
+        Tablet = 2 project / hàng
       */
 
       .project-card:nth-child(n) {
@@ -631,6 +672,10 @@
         margin-top: 4px;
 
         opacity: 1;
+
+        text-align: left;
+
+        justify-self: start;
       }
 
     }
@@ -681,7 +726,7 @@
 
 
       /*
-        Mobile = 1 project / row.
+        Mobile = 1 project / hàng
       */
 
       .project-card:nth-child(n) {
@@ -720,6 +765,8 @@
         margin-top: 0;
 
         text-align: right;
+
+        justify-self: end;
       }
 
     }
@@ -757,6 +804,8 @@
         margin-top: 5px;
 
         text-align: left;
+
+        justify-self: start;
       }
 
     }
@@ -775,28 +824,17 @@
         transition: none;
       }
 
+
       .project-card {
         opacity: 1;
+
         transform: none;
+
         animation: none;
       }
 
     }
-/* Hide scrollbar - vẫn scroll được */
 
-html {
-  scrollbar-width: none; /* Firefox */
-}
-
-body {
-  -ms-overflow-style: none; /* IE / old Edge */
-}
-
-/* Chrome, Safari, Edge */
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-  display: none;
-}
   </style>
 </head>
 
@@ -892,13 +930,11 @@ body::-webkit-scrollbar {
   </header>
 
 
-
   <!-- ========================================
        TOP BLACK SPACE
        ======================================== -->
 
   <div class="projects-intro"></div>
-
 
 
   <!-- ========================================
@@ -965,7 +1001,6 @@ body::-webkit-scrollbar {
     </article>
 
 
-
     <!-- ======================================
          PROJECT 02
          ====================================== -->
@@ -1021,7 +1056,6 @@ body::-webkit-scrollbar {
       </div>
 
     </article>
-
 
 
     <!-- ======================================
@@ -1083,7 +1117,6 @@ body::-webkit-scrollbar {
     </article>
 
 
-
     <!-- ======================================
          PROJECT 04
          ====================================== -->
@@ -1139,7 +1172,6 @@ body::-webkit-scrollbar {
       </div>
 
     </article>
-
 
 
     <!-- ======================================
@@ -1256,8 +1288,124 @@ body::-webkit-scrollbar {
     </article>
 
 
-  </main>
+    <!-- ======================================
+         PROJECT 07
+         ====================================== -->
 
+    <article
+      class="project-card"
+      data-url="project-twinmasqerade.html"
+    >
+
+      <div class="project-media">
+
+        <video
+          muted
+          playsinline
+          loop
+          preload="metadata"
+        >
+
+          <source
+            src="assets/the twin masqerade.webm"
+            type="video/webm"
+          >
+
+        </video>
+
+      </div>
+
+
+      <div class="project-info">
+
+        <div class="project-number">
+          07
+        </div>
+
+
+        <div>
+
+          <div class="project-name">
+            The Twin Masqerade
+          </div>
+
+          <div class="project-year">
+            2025
+          </div>
+
+        </div>
+
+
+        <div class="project-category">
+          Interactive Website
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- ======================================
+         PROJECT 08
+         ====================================== -->
+
+    <article
+      class="project-card"
+      data-url="project-echoesofelara.html"
+    >
+
+      <div class="project-media">
+
+        <video
+          muted
+          playsinline
+          loop
+          preload="metadata"
+        >
+
+          <source
+            src="assets/Echoes of Elara.webm"
+            type="video/webm"
+          >
+
+        </video>
+
+      </div>
+
+
+      <div class="project-info">
+
+        <div class="project-number">
+          08
+        </div>
+
+
+        <div>
+
+          <div class="project-name">
+            Echoes of Elara
+          </div>
+
+          <div class="project-year">
+            2024
+          </div>
+
+        </div>
+
+
+        <div class="project-category">
+          Interactive Website
+        </div>
+
+      </div>
+
+    </article>
+
+
+    
+
+
+  </main>
 
 
   <!-- ========================================
@@ -1291,8 +1439,7 @@ body::-webkit-scrollbar {
 
 
       /*
-        Preload logo để tránh flash
-        khi đổi ảnh.
+        Preload logo.
       */
 
       logos.forEach(
@@ -1332,7 +1479,6 @@ body::-webkit-scrollbar {
       );
 
 
-
       /* =====================================
          PROJECT VIDEOS
          ===================================== */
@@ -1358,15 +1504,15 @@ body::-webkit-scrollbar {
 
 
           /*
-            Đảm bảo ban đầu video đứng yên.
+            Ban đầu video đứng yên.
           */
 
           video.pause();
 
 
           /*
-            Hover vào project:
-            video bắt đầu play.
+            Hover:
+            video chạy loop.
           */
 
           card.addEventListener(
@@ -1394,8 +1540,8 @@ body::-webkit-scrollbar {
 
 
           /*
-            Hover ra:
-            dừng video và quay về đầu.
+            Mouse leave:
+            pause + reset video.
           */
 
           card.addEventListener(
@@ -1418,8 +1564,8 @@ body::-webkit-scrollbar {
 
 
           /*
-            Click project
-            → project detail page.
+            Click project:
+            mở project detail.
           */
 
           card.addEventListener(
@@ -1450,5 +1596,4 @@ body::-webkit-scrollbar {
   </script>
 
 </body>
-
 </html>
